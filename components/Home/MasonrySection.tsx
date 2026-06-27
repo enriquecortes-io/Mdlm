@@ -454,12 +454,16 @@ export default function MasonrySection({ locale = "es" }: { locale?: string }) {
                       padding:"0.7rem 0.9rem", background:BG,
                       display:"flex", flexDirection:"column", flex:1, minWidth:0,
                     }}>
-                      <div style={{ flex:1 }}>
+                      <div style={{ flex:"1 1 auto", minHeight:0, overflow:"hidden" }}>
                         <h3 style={{
                           fontFamily:"'Cormorant Garamond',serif",
                           fontSize:"clamp(1rem,2.5vw,1.4rem)", fontWeight:600,
                           letterSpacing:"0.02em",
                           color:TEXT, margin:"0 0 0.2rem", lineHeight:1.2,
+                          display:"-webkit-box",
+                          WebkitLineClamp:2,
+                          WebkitBoxOrient:"vertical" as any,
+                          overflow:"hidden",
                         }}>
                           {title}
                         </h3>
@@ -472,7 +476,7 @@ export default function MasonrySection({ locale = "es" }: { locale?: string }) {
                           {p.ubicacion}
                         </p>
                       </div>
-                      <div style={{ marginTop:"0.5rem" }}>
+                      <div style={{ marginTop:"0.5rem", flexShrink:0 }}>
                         <p style={{
                           fontFamily:"'Cormorant Garamond',serif",
                           fontSize:"clamp(1rem,2.8vw,1.3rem)", fontWeight:500,
