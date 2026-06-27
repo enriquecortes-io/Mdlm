@@ -385,7 +385,7 @@ export default function MasonrySection({ locale = "es" }: { locale?: string }) {
 
       {/* Carrusel horizontal — páginas de 2 propiedades, snap nativo */}
       <div ref={carouselRef} style={{
-        flex:1, overflowX:"auto", overflowY:"hidden",
+        flex:1, overflowX:"auto", overflowY:"auto",
         WebkitOverflowScrolling:"touch",
         scrollSnapType:"x mandatory",
         display:"flex",
