@@ -21,7 +21,7 @@ export default function HomeExperience({ locale }: Props) {
   useHomeScroll({ headerRef, manifestoRef, filtersRef: masonryRef, carouselRef: masonryRef, captacionRef, panelRefs, totalPanels: TOTAL_PANELS });
 
   return (
-    <div style={{position:"fixed",inset:0,width:"100%",height:"100vh",overflow:"hidden",background:"#FAFAF7"}}>
+    <div style={{position:"fixed",inset:0,width:"100%",height:"100dvh",minHeight:"100vh",overflow:"hidden",background:"#FAFAF7"}}>
 
       {/* Header */}
       <div ref={headerRef} style={{
