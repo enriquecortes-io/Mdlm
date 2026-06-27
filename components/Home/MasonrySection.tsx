@@ -440,7 +440,7 @@ export default function MasonrySection({ locale = "es" }: { locale?: string }) {
           return (
             <div key={pageIdx} data-page-idx={pageIdx} style={{
               flex:"0 0 100%",
-              height: carouselHeight === null ? "100%" : `${carouselHeight - 16}px`,
+              minHeight: carouselHeight === null ? "100%" : `${carouselHeight - 16}px`,
               scrollSnapAlign:"start",
               scrollSnapStop:"always",
               display:"flex",
@@ -448,7 +448,6 @@ export default function MasonrySection({ locale = "es" }: { locale?: string }) {
               gap:"clamp(0.3rem,0.8vw,0.6rem)",
               paddingRight:"0.5rem",
               boxSizing:"border-box",
-              minHeight:0,
             }}>
               {pair.map((p) => {
                 const img = p.galeria_urls?.[0] ? convertGDriveUrl(p.galeria_urls[0]) : "";
@@ -465,8 +464,8 @@ export default function MasonrySection({ locale = "es" }: { locale?: string }) {
                       border:`1px solid ${BORDER}`,
                       boxShadow:`0 1px 4px rgba(26,23,20,0.06)`,
                       display:"flex",
-                      flex:1,
-                      minHeight:0,
+                      flex:"1 1 auto",
+                      minHeight:"180px",
                       opacity:0,
                     }}
                   >
