@@ -296,9 +296,10 @@ export default function MasonrySection({ locale = "es" }: { locale?: string }) {
     <div ref={rootRef} style={{ position:"absolute", inset:0, display:"flex", flexDirection:"column", overflow:"hidden", background:BG }}>
       {/* DEBUG TEMPORAL — quitar después */}
       <div style={{
-        position:"fixed", top:"70px", right:"8px", zIndex:9999,
-        background:"rgba(0,0,0,0.85)", color:"#0f0", font:"11px monospace",
-        padding:"8px 10px", borderRadius:"6px", pointerEvents:"none", whiteSpace:"pre",
+        position:"absolute", top:0, left:0, zIndex:99999,
+        background:"#00ff00", color:"#000", font:"13px monospace", fontWeight:700,
+        padding:"10px 14px", pointerEvents:"none", whiteSpace:"pre",
+        border:"3px solid red",
       }}>
         {`vh: ${typeof window!=="undefined"?window.innerHeight:0}\ncarouselHeight: ${carouselHeight ?? "null"}\nprops: ${properties.length} / filtered: ${filtered.length}`}
       </div>
