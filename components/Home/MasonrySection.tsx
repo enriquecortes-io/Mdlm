@@ -1,5 +1,5 @@
 "use client";
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect, useRef, useLayoutEffect } from "react";
 import { createPortal } from "react-dom";
 import { gsap } from "gsap";
 import { convertGDriveUrl } from "@/lib/gdrive";
@@ -186,8 +186,10 @@ function PropertyPreview({ property: p, locale, onClose }: PreviewProps) {
 }
 
 export default function MasonrySection({ locale = "es" }: { locale?: string }) {
+  const rootRef = useRef<HTMLDivElement>(null);
   const carouselRef = useRef<HTMLDivElement>(null);
   const animatedPages = useRef<Set<number>>(new Set());
+  const [carouselHeight, setCarouselHeight] = useState<number | null>(null);
   const [properties, setProperties] = useState<Property[]>([]);
   const [filters, setFilters] = useState<Record<string,string>>({});
   const [preview, setPreview] = useState<Property | null>(null);
@@ -200,6 +202,30 @@ export default function MasonrySection({ locale = "es" }: { locale?: string }) {
       .then(r => r.json())
       .then(d => setProperties(d.properties || []))
       .catch(() => {});
+  }, []);
+
+  // Medir altura real disponible en px, evitando cadenas de % / flex indefinido en WebKit
+  useLayoutEffect(() => {
+    const el = rootRef.current;
+    if (!el) return;
+    const measure = () => {
+      const header = el.querySelector("[data-masonry-header]") as HTMLElement | null;
+      const footer = el.querySelector("[data-masonry-footer]") as HTMLElement | null;
+      const total = el.getBoundingClientRect().height;
+      const headerH = header?.getBoundingClientRect().height || 0;
+      const footerH = footer?.getBoundingClientRect().height || 0;
+      setCarouselHeight(Math.max(0, total - headerH - footerH));
+    };
+    measure();
+    const ro = new ResizeObserver(measure);
+    ro.observe(el);
+    window.addEventListener("resize", measure);
+    window.addEventListener("orientationchange", measure);
+    return () => {
+      ro.disconnect();
+      window.removeEventListener("resize", measure);
+      window.removeEventListener("orientationchange", measure);
+    };
   }, []);
 
   const filtered = properties.filter(p => {
@@ -267,10 +293,10 @@ export default function MasonrySection({ locale = "es" }: { locale?: string }) {
   };
 
   return (
-    <div style={{ position:"absolute", inset:0, display:"flex", flexDirection:"column", overflow:"hidden", background:BG }}>
+    <div ref={rootRef} style={{ position:"absolute", inset:0, display:"flex", flexDirection:"column", overflow:"hidden", background:BG }}>
 
       {/* Header + Filtros */}
-      <div style={{
+      <div data-masonry-header style={{
         flexShrink:0,
         padding:"clamp(3.5rem,6vw,4.5rem) clamp(1.5rem,4vw,3rem) 0",
         borderBottom:`1px solid ${BORDER}`,
@@ -385,7 +411,9 @@ export default function MasonrySection({ locale = "es" }: { locale?: string }) {
 
       {/* Carrusel horizontal — páginas de 2 propiedades, snap nativo */}
       <div ref={carouselRef} style={{
-        flex:1, overflowX:"auto", overflowY:"auto",
+        flex: carouselHeight === null ? 1 : "0 0 auto",
+        height: carouselHeight === null ? undefined : `${carouselHeight}px`,
+        overflowX:"auto", overflowY:"auto",
         WebkitOverflowScrolling:"touch",
         scrollSnapType:"x mandatory",
         display:"flex",
@@ -397,7 +425,7 @@ export default function MasonrySection({ locale = "es" }: { locale?: string }) {
           return (
             <div key={pageIdx} data-page-idx={pageIdx} style={{
               flex:"0 0 100%",
-              height:"100%",
+              height: carouselHeight === null ? "100%" : `${carouselHeight - 16}px`,
               scrollSnapAlign:"start",
               scrollSnapStop:"always",
               display:"flex",
@@ -508,7 +536,7 @@ export default function MasonrySection({ locale = "es" }: { locale?: string }) {
       </div>
 
       {/* Indicador de páginas */}
-      <div style={{ display:"flex", justifyContent:"center", gap:"0.4rem", padding:"0 0 1.2rem" }}>
+      <div data-masonry-footer style={{ display:"flex", justifyContent:"center", gap:"0.4rem", padding:"0 0 1.2rem" }}>
         {Array.from({ length: Math.ceil(filtered.length / 2) }).map((_, i) => (
           <span key={i} style={{ width:"0.4rem", height:"0.4rem", borderRadius:"50%", background:BORDER }}/>
         ))}
