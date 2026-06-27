@@ -186,6 +186,8 @@ function PropertyPreview({ property: p, locale, onClose }: PreviewProps) {
 }
 
 export default function MasonrySection({ locale = "es" }: { locale?: string }) {
+  const carouselRef = useRef<HTMLDivElement>(null);
+  const animatedPages = useRef<Set<number>>(new Set());
   const [properties, setProperties] = useState<Property[]>([]);
   const [filters, setFilters] = useState<Record<string,string>>({});
   const [preview, setPreview] = useState<Property | null>(null);
@@ -220,6 +222,36 @@ export default function MasonrySection({ locale = "es" }: { locale?: string }) {
     if (filters.precio && !matchPrice(Number(p.precio), filters.precio)) return false;
     return true;
   });
+
+  useEffect(() => {
+    const root = carouselRef.current;
+    if (!root) return;
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (!entry.isIntersecting) return;
+          const pageEl = entry.target as HTMLElement;
+          const idx = Number(pageEl.dataset.pageIdx);
+          if (animatedPages.current.has(idx)) return;
+          animatedPages.current.add(idx);
+
+          const cards = pageEl.querySelectorAll(".carousel-card");
+          gsap.fromTo(
+            cards,
+            { opacity: 0, scale: 0.94, y: 10 },
+            { opacity: 1, scale: 1, y: 0, duration: 0.55, ease: "power2.out", stagger: 0.08 }
+          );
+        });
+      },
+      { root, threshold: 0.5 }
+    );
+
+    const pages = root.querySelectorAll("[data-page-idx]");
+    pages.forEach((p) => observer.observe(p));
+
+    return () => observer.disconnect();
+  }, [filtered.length]);
 
   const toggleFilter = (id: string, val: string) => {
     setFilters(prev => ({ ...prev, [id]: prev[id] === val ? "" : val }));
@@ -352,7 +384,7 @@ export default function MasonrySection({ locale = "es" }: { locale?: string }) {
       </div>
 
       {/* Carrusel horizontal — páginas de 2 propiedades, snap nativo */}
-      <div style={{
+      <div ref={carouselRef} style={{
         flex:1, overflowX:"auto", overflowY:"hidden",
         WebkitOverflowScrolling:"touch",
         scrollSnapType:"x mandatory",
@@ -363,7 +395,7 @@ export default function MasonrySection({ locale = "es" }: { locale?: string }) {
         {Array.from({ length: Math.ceil(filtered.length / 2) }).map((_, pageIdx) => {
           const pair = filtered.slice(pageIdx * 2, pageIdx * 2 + 2);
           return (
-            <div key={pageIdx} style={{
+            <div key={pageIdx} data-page-idx={pageIdx} style={{
               flex:"0 0 100%",
               scrollSnapAlign:"start",
               scrollSnapStop:"always",
@@ -380,6 +412,7 @@ export default function MasonrySection({ locale = "es" }: { locale?: string }) {
                 return (
                   <div
                     key={p.slug}
+                    className="carousel-card"
                     onClick={() => setPreview(p)}
                     style={{
                       cursor:"pointer",
@@ -389,6 +422,7 @@ export default function MasonrySection({ locale = "es" }: { locale?: string }) {
                       display:"flex",
                       flex:1,
                       minHeight:0,
+                      opacity:0,
                     }}
                   >
                     {/* Imagen */}
