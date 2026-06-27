@@ -214,7 +214,13 @@ export default function MasonrySection({ locale = "es" }: { locale?: string }) {
       const total = el.getBoundingClientRect().height;
       const headerH = header?.getBoundingClientRect().height || 0;
       const footerH = footer?.getBoundingClientRect().height || 0;
-      setCarouselHeight(Math.max(0, total - headerH - footerH));
+      const computed = Math.max(0, total - headerH - footerH);
+      setCarouselHeight(computed);
+
+      // DEBUG TEMPORAL — datos en el titulo de la pestaña, inmune a CSS/overflow/zIndex
+      if (typeof document !== "undefined") {
+        document.title = `vh:${window.innerHeight} total:${Math.round(total)} hdr:${Math.round(headerH)} ftr:${Math.round(footerH)} carH:${Math.round(computed)}`;
+      }
     };
     measure();
     const ro = new ResizeObserver(measure);
