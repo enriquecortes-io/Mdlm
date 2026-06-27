@@ -239,8 +239,8 @@ export default function MasonrySection({ locale = "es" }: { locale?: string }) {
           const cards = pageEl.querySelectorAll(".carousel-card");
           gsap.fromTo(
             cards,
-            { opacity: 0, scale: 0.94, y: 10 },
-            { opacity: 1, scale: 1, y: 0, duration: 0.55, ease: "power2.out", stagger: 0.08 }
+            { opacity: 0, scale: 0.88, y: 40 },
+            { opacity: 1, scale: 1, y: 0, duration: 0.9, ease: "power3.out", stagger: 0.18 }
           );
         });
       },
@@ -397,6 +397,7 @@ export default function MasonrySection({ locale = "es" }: { locale?: string }) {
           return (
             <div key={pageIdx} data-page-idx={pageIdx} style={{
               flex:"0 0 100%",
+              height:"100%",
               scrollSnapAlign:"start",
               scrollSnapStop:"always",
               display:"flex",
@@ -404,6 +405,7 @@ export default function MasonrySection({ locale = "es" }: { locale?: string }) {
               gap:"clamp(0.3rem,0.8vw,0.6rem)",
               paddingRight:"0.5rem",
               boxSizing:"border-box",
+              minHeight:0,
             }}>
               {pair.map((p) => {
                 const img = p.galeria_urls?.[0] ? convertGDriveUrl(p.galeria_urls[0]) : "";
