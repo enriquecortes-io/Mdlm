@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 
-const MAINTENANCE = true; // Cambia a false para desactivar
+const MAINTENANCE = false; // Cambia a false para desactivar
 
 export function proxy(request: NextRequest) {
   const { pathname } = request.nextUrl;
