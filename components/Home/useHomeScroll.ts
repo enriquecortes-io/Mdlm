@@ -166,11 +166,15 @@ export function useHomeScroll({ headerRef, manifestoRef, filtersRef, carouselRef
       // En fase masonry, si el carrusel aun tiene scroll vertical interno pendiente,
       // dejamos que ese scroll consuma el gesto en vez de saltar de seccion.
       if (phaseRef.current === "masonry" && carouselRef?.current) {
-        const el = carouselRef.current;
-        const atTop = el.scrollTop <= 2;
-        const atBottom = el.scrollTop + el.clientHeight >= el.scrollHeight - 2;
-        if (isSwipeDown && !atBottom) return; // swipe hacia arriba en pantalla = deltaY>0 = "down" = avanzar; bloquea si no esta al fondo
-        if (isSwipeUp && !atTop) return;
+        // carouselRef aqui es el wrapper exterior (masonryRef); el scroll real
+        // vive en el div interno de MasonrySection marcado con data-masonry-scroll.
+        const el = carouselRef.current.querySelector("[data-masonry-scroll]") as HTMLElement | null;
+        if (el) {
+          const atTop = el.scrollTop <= 2;
+          const atBottom = el.scrollTop + el.clientHeight >= el.scrollHeight - 2;
+          if (isSwipeDown && !atBottom) return;
+          if (isSwipeUp && !atTop) return;
+        }
       }
 
       lastPhaseChange = now;
