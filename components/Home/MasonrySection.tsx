@@ -428,7 +428,7 @@ export default function MasonrySection({ locale = "es" }: { locale?: string }) {
       <div ref={carouselRef} data-masonry-scroll style={{
         flex: carouselHeight === null ? 1 : "0 0 auto",
         height: carouselHeight === null ? undefined : `${carouselHeight}px`,
-        overflowX:"auto", overflowY:"auto",
+        overflowX:"auto", overflowY:"scroll",
         WebkitOverflowScrolling:"touch",
         scrollSnapType:"x mandatory",
         display:"flex",
@@ -499,7 +499,7 @@ export default function MasonrySection({ locale = "es" }: { locale?: string }) {
                       <div style={{ flex:"1 1 auto", minHeight:0, overflow:"hidden" }}>
                         <h3 style={{
                           fontFamily:"'Cormorant Garamond',serif",
-                          fontSize:"clamp(1rem,2.5vw,1.4rem)", fontWeight:600,
+                          fontSize:"clamp(1.3rem,3vw,1.8rem)", fontWeight:600,
                           letterSpacing:"0.02em",
                           color:TEXT, margin:"0 0 0.2rem", lineHeight:1.2,
                           display:"-webkit-box",
@@ -511,8 +511,8 @@ export default function MasonrySection({ locale = "es" }: { locale?: string }) {
                         </h3>
                         <p style={{
                           fontFamily:"'Montserrat',sans-serif",
-                          fontSize:"0.42rem", letterSpacing:"0.12em",
-                          color:MUTED, margin:0, fontWeight:300,
+                          fontSize:"0.65rem", letterSpacing:"0.1em",
+                          color:MUTED, margin:0, fontWeight:400,
                           textTransform:"uppercase",
                         }}>
                           {p.ubicacion}
@@ -521,7 +521,7 @@ export default function MasonrySection({ locale = "es" }: { locale?: string }) {
                       <div style={{ marginTop:"0.5rem", flexShrink:0 }}>
                         <p style={{
                           fontFamily:"'Cormorant Garamond',serif",
-                          fontSize:"clamp(1rem,2.8vw,1.3rem)", fontWeight:500,
+                          fontSize:"clamp(1.4rem,3.2vw,1.7rem)", fontWeight:500,
                           color:ACCENT, margin:"0 0 0.35rem", lineHeight:1,
                         }}>
                           €{p.precio?.toLocaleString()}
