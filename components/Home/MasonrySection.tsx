@@ -351,138 +351,130 @@ export default function MasonrySection({ locale = "es" }: { locale?: string }) {
         </div>
       </div>
 
-      {/* Grid Masonry */}
+      {/* Carrusel horizontal — páginas de 2 propiedades, snap nativo */}
       <div style={{
-        flex:1, overflowY:"auto", WebkitOverflowScrolling:"touch",
-        padding:"0.5rem 0.5rem 4rem",
-        display:"grid",
-        gridTemplateColumns:"repeat(3, 1fr)",
-        gap:"clamp(0.3rem,0.8vw,0.6rem)",
-        alignContent:"start",
+        flex:1, overflowX:"auto", overflowY:"hidden",
+        WebkitOverflowScrolling:"touch",
+        scrollSnapType:"x mandatory",
+        display:"flex",
+        padding:"0.5rem 0.5rem 1rem",
         position:"relative",
       }}>
-        {filtered.map((p) => {
-          const img = p.galeria_urls?.[0] ? convertGDriveUrl(p.galeria_urls[0]) : "";
-          const title = getTitle(p, locale);
-          const isHovered = hoveredCard === p.slug;
-
+        {Array.from({ length: Math.ceil(filtered.length / 2) }).map((_, pageIdx) => {
+          const pair = filtered.slice(pageIdx * 2, pageIdx * 2 + 2);
           return (
-            <div
-              key={p.slug}
-              onClick={() => setPreview(p)}
-              onMouseEnter={e => {
-                const el = e.currentTarget as HTMLElement;
-                if (el.dataset.expanded === "1") return;
-                el.dataset.expanded = "1";
-                el.style.zIndex = "9999";
-                gsap.to(el, {
-                  scale: 1.18,
-                  boxShadow: "0 24px 64px rgba(26,23,20,0.22)",
-                  duration: 0.4,
-                  ease: "power2.out",
-                });
-              }}
-              onMouseLeave={e => {
-                const el = e.currentTarget as HTMLElement;
-                el.dataset.expanded = "0";
-                gsap.to(el, {
-                  scale: 1,
-                  boxShadow: "0 1px 4px rgba(26,23,20,0.06)",
-                  duration: 0.4,
-                  ease: "power2.inOut",
-                  onComplete: () => { el.style.zIndex = ""; }
-                });
-              }}
-              style={{
-                cursor:"pointer",
-                background:BG,
-                border:`1px solid ${BORDER}`,
-                transition:"border-color 0.3s, box-shadow 0.3s",
-                boxShadow:`0 1px 4px rgba(26,23,20,0.06)`,
-                overflow:"visible",
-                display:"flex", flexDirection:"column",
-              }}
-            >
-              {/* Imagen */}
-              <div style={{ position:"relative", overflow:"hidden", height:"clamp(90px,20vw,180px)" }}>
-                {img ? (
-                  <img src={img} alt={title} style={{
-                    width:"100%", height:"100%", objectFit:"cover", display:"block",
-                    transform:"scale(1)",
-                    
-                  }}/>
-                ) : (
-                  <div style={{ width:"100%", height:"clamp(90px,20vw,180px)", background:BG_SOFT }}/>
-                )}
-                {p.tipo && (
-                  <div style={{
-                    position:"absolute", top:"0.6rem", left:"0.6rem",
-                    background:ACCENT,
-                    padding:"0.25rem 0.6rem",
-                    fontFamily:"'Montserrat',sans-serif",
-                    fontSize:"0.35rem", letterSpacing:"0.2em",
-                    textTransform:"uppercase", color:"#FAF8F4",
-                    fontWeight:500,
-                  }}>
-                    {p.tipo}
-                  </div>
-                )}
-              </div>
+            <div key={pageIdx} style={{
+              flex:"0 0 100%",
+              scrollSnapAlign:"start",
+              scrollSnapStop:"always",
+              display:"flex",
+              flexDirection:"column",
+              gap:"clamp(0.3rem,0.8vw,0.6rem)",
+              paddingRight:"0.5rem",
+              boxSizing:"border-box",
+            }}>
+              {pair.map((p) => {
+                const img = p.galeria_urls?.[0] ? convertGDriveUrl(p.galeria_urls[0]) : "";
+                const title = getTitle(p, locale);
 
-              {/* Info — anclada al fondo del card */}
-              <div style={{
-                padding:"0.5rem 0.6rem 0.7rem", background:BG,
-                display:"flex", flexDirection:"column", flex:1,
-              }}>
-                {/* Título + Ubicación — crecen para empujar precio/stats abajo */}
-                <div style={{ flex:1 }}>
-                  <h3 style={{
-                    fontFamily:"'Cormorant Garamond',serif",
-                    fontSize:"1.1rem", fontWeight:600,
-                    letterSpacing:"0.02em",
-                    color:TEXT, margin:"0 0 0.2rem", lineHeight:1.2,
-                  }}>
-                    {title}
-                  </h3>
-                  <p style={{
-                    fontFamily:"'Montserrat',sans-serif",
-                    fontSize:"0.42rem", letterSpacing:"0.12em",
-                    color:MUTED, margin:0, fontWeight:300,
-                    textTransform:"uppercase",
-                  }}>
-                    {p.ubicacion}
-                  </p>
-                </div>
-                {/* Precio + Stats — siempre al fondo */}
-                <div style={{ marginTop:"0.5rem" }}>
-                  <p style={{
-                    fontFamily:"'Cormorant Garamond',serif",
-                    fontSize:"1.2rem", fontWeight:500,
-                    color:ACCENT, margin:"0 0 0.35rem", lineHeight:1,
-                  }}>
-                    €{p.precio?.toLocaleString()}
-                  </p>
-                  {(p.m2_construidos > 0 || p.habitaciones > 0) && (
-                    <div style={{ display:"flex", gap:"0.8rem", borderTop:`1px solid ${BORDER}`, paddingTop:"0.4rem" }}>
-                      {p.m2_construidos > 0 && <span style={{ fontFamily:"'Montserrat',sans-serif", fontSize:"0.42rem", letterSpacing:"0.1em", color:MUTED }}>{p.m2_construidos} m²</span>}
-                      {p.habitaciones > 0 && <span style={{ fontFamily:"'Montserrat',sans-serif", fontSize:"0.42rem", letterSpacing:"0.1em", color:MUTED }}>{p.habitaciones} {t.bedrooms}</span>}
-                      {p.banos > 0 && <span style={{ fontFamily:"'Montserrat',sans-serif", fontSize:"0.42rem", letterSpacing:"0.1em", color:MUTED }}>{p.banos} {t.bathrooms}</span>}
+                return (
+                  <div
+                    key={p.slug}
+                    onClick={() => setPreview(p)}
+                    style={{
+                      cursor:"pointer",
+                      background:BG,
+                      border:`1px solid ${BORDER}`,
+                      boxShadow:`0 1px 4px rgba(26,23,20,0.06)`,
+                      display:"flex",
+                      flex:1,
+                      minHeight:0,
+                    }}
+                  >
+                    {/* Imagen */}
+                    <div style={{ position:"relative", overflow:"hidden", width:"45%", flexShrink:0 }}>
+                      {img ? (
+                        <img src={img} alt={title} style={{ width:"100%", height:"100%", objectFit:"cover", display:"block" }}/>
+                      ) : (
+                        <div style={{ width:"100%", height:"100%", background:BG_SOFT }}/>
+                      )}
+                      {p.tipo && (
+                        <div style={{
+                          position:"absolute", top:"0.6rem", left:"0.6rem",
+                          background:ACCENT,
+                          padding:"0.25rem 0.6rem",
+                          fontFamily:"'Montserrat',sans-serif",
+                          fontSize:"0.35rem", letterSpacing:"0.2em",
+                          textTransform:"uppercase", color:"#FAF8F4",
+                          fontWeight:500,
+                        }}>
+                          {p.tipo}
+                        </div>
+                      )}
                     </div>
-                  )}
-                </div>
-              </div>
+
+                    {/* Info */}
+                    <div style={{
+                      padding:"0.7rem 0.9rem", background:BG,
+                      display:"flex", flexDirection:"column", flex:1, minWidth:0,
+                    }}>
+                      <div style={{ flex:1 }}>
+                        <h3 style={{
+                          fontFamily:"'Cormorant Garamond',serif",
+                          fontSize:"clamp(1rem,2.5vw,1.4rem)", fontWeight:600,
+                          letterSpacing:"0.02em",
+                          color:TEXT, margin:"0 0 0.2rem", lineHeight:1.2,
+                        }}>
+                          {title}
+                        </h3>
+                        <p style={{
+                          fontFamily:"'Montserrat',sans-serif",
+                          fontSize:"0.42rem", letterSpacing:"0.12em",
+                          color:MUTED, margin:0, fontWeight:300,
+                          textTransform:"uppercase",
+                        }}>
+                          {p.ubicacion}
+                        </p>
+                      </div>
+                      <div style={{ marginTop:"0.5rem" }}>
+                        <p style={{
+                          fontFamily:"'Cormorant Garamond',serif",
+                          fontSize:"clamp(1rem,2.8vw,1.3rem)", fontWeight:500,
+                          color:ACCENT, margin:"0 0 0.35rem", lineHeight:1,
+                        }}>
+                          €{p.precio?.toLocaleString()}
+                        </p>
+                        {(p.m2_construidos > 0 || p.habitaciones > 0) && (
+                          <div style={{ display:"flex", gap:"0.8rem", borderTop:`1px solid ${BORDER}`, paddingTop:"0.4rem", flexWrap:"wrap" }}>
+                            {p.m2_construidos > 0 && <span style={{ fontFamily:"'Montserrat',sans-serif", fontSize:"0.42rem", letterSpacing:"0.1em", color:MUTED }}>{p.m2_construidos} m²</span>}
+                            {p.habitaciones > 0 && <span style={{ fontFamily:"'Montserrat',sans-serif", fontSize:"0.42rem", letterSpacing:"0.1em", color:MUTED }}>{p.habitaciones} {t.bedrooms}</span>}
+                            {p.banos > 0 && <span style={{ fontFamily:"'Montserrat',sans-serif", fontSize:"0.42rem", letterSpacing:"0.1em", color:MUTED }}>{p.banos} {t.bathrooms}</span>}
+                          </div>
+                        )}
+                      </div>
+                    </div>
+                  </div>
+                );
+              })}
             </div>
           );
         })}
 
         {filtered.length === 0 && (
-          <div style={{ gridColumn:"1/-1", textAlign:"center", padding:"4rem", color:MUTED, fontFamily:"'Montserrat',sans-serif", fontSize:"0.6rem", letterSpacing:"0.3em", textTransform:"uppercase" }}>
+          <div style={{ flex:"0 0 100%", textAlign:"center", padding:"4rem", color:MUTED, fontFamily:"'Montserrat',sans-serif", fontSize:"0.6rem", letterSpacing:"0.3em", textTransform:"uppercase" }}>
             Sin propiedades con estos filtros
           </div>
         )}
       </div>
 
-      {preview && typeof document !== "undefined" && createPortal(
+      {/* Indicador de páginas */}
+      <div style={{ display:"flex", justifyContent:"center", gap:"0.4rem", padding:"0 0 1.2rem" }}>
+        {Array.from({ length: Math.ceil(filtered.length / 2) }).map((_, i) => (
+          <span key={i} style={{ width:"0.4rem", height:"0.4rem", borderRadius:"50%", background:BORDER }}/>
+        ))}
+      </div>
+      
+            {preview && typeof document !== "undefined" && createPortal(
         <PropertyPreview property={preview} locale={locale} onClose={() => setPreview(null)} />,
         document.body
       )}
