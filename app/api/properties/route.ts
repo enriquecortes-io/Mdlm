@@ -12,8 +12,7 @@ export async function GET() {
       .from("properties")
       .select(CARD_FIELDS)
       .eq("activa", true)
-      .order("created_at", { ascending: false })
-      .limit(5);
+      .order("created_at", { ascending: false });
 
     if (error) throw error;
 
