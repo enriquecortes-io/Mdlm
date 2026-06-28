@@ -188,6 +188,7 @@ function PropertyPreview({ property: p, locale, onClose }: PreviewProps) {
 export default function MasonrySection({ locale = "es" }: { locale?: string }) {
   const rootRef = useRef<HTMLDivElement>(null);
   const carouselRef = useRef<HTMLDivElement>(null);
+  const swipeArrowsRef = useRef<HTMLDivElement>(null);
   const animatedPages = useRef<Set<number>>(new Set());
   const [carouselHeight, setCarouselHeight] = useState<number | null>(null);
   const [properties, setProperties] = useState<Property[]>([]);
@@ -284,6 +285,18 @@ export default function MasonrySection({ locale = "es" }: { locale?: string }) {
 
     return () => observer.disconnect();
   }, [filtered.length]);
+
+  // Animacion GSAP de invitacion a deslizar: flechas oscilan en ambos sentidos
+  useEffect(() => {
+    const el = swipeArrowsRef.current;
+    if (!el) return;
+    const left = el.querySelector(".swipe-arrow-left");
+    const right = el.querySelector(".swipe-arrow-right");
+    const tl = gsap.timeline({ repeat: -1, yoyo: true, repeatDelay: 0.3 });
+    tl.to([left, right], { x: 6, opacity: 1, duration: 0.9, ease: "sine.inOut" }, 0)
+      .to([left, right], { x: -6, opacity: 0.4, duration: 0.9, ease: "sine.inOut" }, 0.9);
+    return () => { tl.kill(); };
+  }, []);
 
   const toggleFilter = (id: string, val: string) => {
     setFilters(prev => ({ ...prev, [id]: prev[id] === val ? "" : val }));
@@ -416,6 +429,23 @@ export default function MasonrySection({ locale = "es" }: { locale?: string }) {
         </div>
       </div>
 
+      {/* Indicador GSAP: invita a deslizar el carrusel */}
+      <div ref={swipeArrowsRef} style={{
+        display:"flex", alignItems:"center", justifyContent:"center",
+        gap:"0.6rem", padding:"0.4rem 0", flexShrink:0,
+      }}>
+        <span className="swipe-arrow-left" style={{
+          color:ACCENT, fontSize:"0.9rem", opacity:0.4, display:"inline-block",
+        }}>←</span>
+        <span style={{
+          fontFamily:"'Montserrat',sans-serif", fontSize:"0.5rem",
+          letterSpacing:"0.3em", textTransform:"uppercase", color:MUTED,
+        }}>deslizar</span>
+        <span className="swipe-arrow-right" style={{
+          color:ACCENT, fontSize:"0.9rem", opacity:0.4, display:"inline-block",
+        }}>→</span>
+      </div>
+
       {/* Carrusel horizontal — páginas de 2 propiedades, snap nativo */}
       <div ref={carouselRef} style={{
         flex: carouselHeight === null ? 1 : "0 0 auto",
@@ -430,18 +460,16 @@ export default function MasonrySection({ locale = "es" }: { locale?: string }) {
         {Array.from({ length: Math.ceil(filtered.length / 2) }).map((_, pageIdx) => {
           const pair = filtered.slice(pageIdx * 2, pageIdx * 2 + 2);
           return (
-            <div key={pageIdx} data-page-idx={pageIdx} data-masonry-scroll style={{
+            <div key={pageIdx} data-page-idx={pageIdx} style={{
               flex:"0 0 100%",
-              height: carouselHeight === null ? "100%" : `${carouselHeight - 16}px`,
+              height: carouselHeight === null ? "100%" : `${carouselHeight}px`,
               scrollSnapAlign:"start",
               scrollSnapStop:"always",
               display:"flex",
-              flexDirection:"column",
+              flexDirection: window.innerWidth < 768 ? "column" : "row",
               gap:"clamp(0.3rem,0.8vw,0.6rem)",
               paddingRight:"0.5rem",
               boxSizing:"border-box",
-              overflowY:"auto",
-              WebkitOverflowScrolling:"touch",
             }}>
               {pair.map((p) => {
                 const img = p.galeria_urls?.[0] ? convertGDriveUrl(p.galeria_urls[0]) : "";
@@ -458,16 +486,16 @@ export default function MasonrySection({ locale = "es" }: { locale?: string }) {
                       border:`1px solid ${BORDER}`,
                       boxShadow:`0 1px 4px rgba(26,23,20,0.06)`,
                       display:"flex",
-                      flex:"1 1 auto",
-                      minHeight:"180px",
-                      maxHeight: carouselHeight === null ? undefined : `${(carouselHeight - 32) / 2}px`,
+                      flexDirection:"column",
+                      flex:1,
+                      minHeight:0,
                       position:"relative",
                       overflow:"hidden",
                       opacity:0,
                     }}
                   >
                     {/* Imagen */}
-                    <div style={{ position:"absolute", inset:0, overflow:"hidden", width:"45%", flexShrink:0 }}>
+                    <div style={{ position:"relative", overflow:"hidden", flex:"1 1 55%", minHeight:0 }}>
                       {img ? (
                         <img src={img} alt={title} style={{ width:"100%", height:"100%", objectFit:"cover", display:"block" }}/>
                       ) : (
@@ -491,8 +519,8 @@ export default function MasonrySection({ locale = "es" }: { locale?: string }) {
                     {/* Info */}
                     <div style={{
                       padding:"0.7rem 0.9rem", background:BG,
-                      display:"flex", flexDirection:"column", flex:1, minWidth:0,
-                      marginLeft:"45%", width:"55%", boxSizing:"border-box",
+                      display:"flex", flexDirection:"column",
+                      flex:"0 0 auto",
                       overflowY:"auto",
                     }}>
                       <div style={{ flex:"1 1 auto", minHeight:0, overflow:"hidden" }}>
