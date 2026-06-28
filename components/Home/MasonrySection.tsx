@@ -425,10 +425,10 @@ export default function MasonrySection({ locale = "es" }: { locale?: string }) {
       </div>
 
       {/* Carrusel horizontal — páginas de 2 propiedades, snap nativo */}
-      <div ref={carouselRef} data-masonry-scroll style={{
+      <div ref={carouselRef} style={{
         flex: carouselHeight === null ? 1 : "0 0 auto",
         height: carouselHeight === null ? undefined : `${carouselHeight}px`,
-        overflowX:"auto", overflowY:"scroll",
+        overflowX:"auto", overflowY:"hidden",
         WebkitOverflowScrolling:"touch",
         scrollSnapType:"x mandatory",
         display:"flex",
@@ -438,9 +438,9 @@ export default function MasonrySection({ locale = "es" }: { locale?: string }) {
         {Array.from({ length: Math.ceil(filtered.length / 2) }).map((_, pageIdx) => {
           const pair = filtered.slice(pageIdx * 2, pageIdx * 2 + 2);
           return (
-            <div key={pageIdx} data-page-idx={pageIdx} style={{
+            <div key={pageIdx} data-page-idx={pageIdx} data-masonry-scroll style={{
               flex:"0 0 100%",
-              minHeight: carouselHeight === null ? "100%" : `${carouselHeight - 16}px`,
+              height: carouselHeight === null ? "100%" : `${carouselHeight - 16}px`,
               scrollSnapAlign:"start",
               scrollSnapStop:"always",
               display:"flex",
@@ -448,6 +448,8 @@ export default function MasonrySection({ locale = "es" }: { locale?: string }) {
               gap:"clamp(0.3rem,0.8vw,0.6rem)",
               paddingRight:"0.5rem",
               boxSizing:"border-box",
+              overflowY:"auto",
+              WebkitOverflowScrolling:"touch",
             }}>
               {pair.map((p) => {
                 const img = p.galeria_urls?.[0] ? convertGDriveUrl(p.galeria_urls[0]) : "";

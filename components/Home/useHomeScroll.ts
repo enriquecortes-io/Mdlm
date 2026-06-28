@@ -166,12 +166,19 @@ export function useHomeScroll({ headerRef, manifestoRef, filtersRef, carouselRef
       // En fase masonry, si el carrusel aun tiene scroll vertical interno pendiente,
       // dejamos que ese scroll consuma el gesto en vez de saltar de seccion.
       if (phaseRef.current === "masonry" && carouselRef?.current) {
-        // carouselRef aqui es el wrapper exterior (masonryRef); el scroll real
-        // vive en el div interno de MasonrySection marcado con data-masonry-scroll.
-        const el = carouselRef.current.querySelector("[data-masonry-scroll]") as HTMLElement | null;
-        if (el) {
-          const atTop = el.scrollTop <= 2;
-          const atBottom = el.scrollTop + el.clientHeight >= el.scrollHeight - 2;
+        // Cada "pagina" del carrusel horizontal tiene su propio scroll vertical
+        // marcado con data-masonry-scroll. Buscamos la que esta realmente visible
+        // (centrada en el viewport horizontal) para no mirar una pagina oculta.
+        const pages = Array.from(carouselRef.current.querySelectorAll("[data-masonry-scroll]")) as HTMLElement[];
+        let closest: HTMLElement | undefined;
+        let minDist = Infinity;
+        for (const p of pages) {
+          const dist = Math.abs(p.getBoundingClientRect().left);
+          if (dist < minDist) { minDist = dist; closest = p; }
+        }
+        if (closest) {
+          const atTop = closest.scrollTop <= 2;
+          const atBottom = closest.scrollTop + closest.clientHeight >= closest.scrollHeight - 2;
           if (isSwipeDown && !atBottom) return;
           if (isSwipeUp && !atTop) return;
         }
