@@ -288,21 +288,31 @@ export default function MasonrySection({ locale = "es" }: { locale?: string }) {
     // Desactivamos el scroll-snap mientras el gesto esta activo: con mandatory+stop:always
     // WebKit puede re-encajar inmediatamente al snap point actual en el mismo frame,
     // anulando visualmente cualquier scrollLeft +=. Lo reactivamos al soltar el gesto.
-    let snapResumeTimer: ReturnType<typeof setTimeout> | null = null;
+    // En vez de pelear con scroll-snap mutando estilos (React los pisa en cada
+    // render), acumulamos el gesto horizontal y saltamos de pagina en pagina con
+    // scrollTo suave, dejando que el snap nativo haga su trabajo sin interferencia.
+    let hWheelAccum = 0;
+    let hWheelTimer: ReturnType<typeof setTimeout> | null = null;
+    const H_WHEEL_SNAP = 60;
+
     const handleWheel = (e: WheelEvent) => {
-      // Solo interceptamos gestos predominantemente horizontales (deltaX > deltaY).
-      // Si el gesto es vertical, no hacemos nada aqui: dejamos que el evento siga
-      // su curso normal hacia el listener global de useHomeScroll.ts (cambio de fase).
-      if (Math.abs(e.deltaX) <= Math.abs(e.deltaY)) return;
-
+      if (Math.abs(e.deltaX) <= Math.abs(e.deltaY)) return; // gesto vertical: lo dejamos pasar
       e.preventDefault();
-      root.style.scrollSnapType = "none";
-      root.scrollLeft += e.deltaX;
 
-      if (snapResumeTimer) clearTimeout(snapResumeTimer);
-      snapResumeTimer = setTimeout(() => {
-        root.style.scrollSnapType = "x mandatory";
-      }, 150);
+      hWheelAccum += e.deltaX;
+      if (hWheelTimer) clearTimeout(hWheelTimer);
+      hWheelTimer = setTimeout(() => { hWheelAccum = 0; }, 250);
+
+      if (Math.abs(hWheelAccum) >= H_WHEEL_SNAP) {
+        const dir = hWheelAccum > 0 ? 1 : -1;
+        hWheelAccum = 0;
+        const pageWidth = root.clientWidth;
+        const nextLeft = Math.max(0, Math.min(
+          root.scrollWidth - pageWidth,
+          root.scrollLeft + dir * pageWidth
+        ));
+        root.scrollTo({ left: nextLeft, behavior: "smooth" });
+      }
     };
     root.addEventListener("wheel", handleWheel, { passive: false });
 
