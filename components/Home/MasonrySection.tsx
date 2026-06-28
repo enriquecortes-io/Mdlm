@@ -571,7 +571,7 @@ export default function MasonrySection({ locale = "es" }: { locale?: string }) {
                           {p.ubicacion}
                         </p>
                       </div>
-                      <div style={{ marginTop:"0.5rem", flexShrink:0 }}>
+                      <div style={{ marginTop:"0.5rem", flexShrink:0, background:"yellow", minHeight:"10px" }}>
                         <p style={{
                           fontFamily:"'Cormorant Garamond',serif",
                           fontSize:"clamp(1.4rem,3.2vw,1.7rem)", fontWeight:500,
