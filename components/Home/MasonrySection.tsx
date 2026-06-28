@@ -283,12 +283,14 @@ export default function MasonrySection({ locale = "es" }: { locale?: string }) {
     const pages = root.querySelectorAll("[data-page-idx]");
     pages.forEach((p) => observer.observe(p));
 
-    // Permitir scroll horizontal con la rueda del raton (deltaY -> scrollLeft)
+    // Permitir scroll horizontal con rueda de raton (deltaY) y con trackpad (deltaX).
+    // Se hace siempre de forma manual (no depender del default del navegador), porque
+    // useHomeScroll.ts tiene un listener global de wheel con preventDefault que cancelaria
+    // el scroll nativo del trackpad antes de que surta efecto.
     const handleWheel = (e: WheelEvent) => {
-      if (Math.abs(e.deltaY) > Math.abs(e.deltaX)) {
-        e.preventDefault();
-        root.scrollLeft += e.deltaY;
-      }
+      e.preventDefault();
+      const delta = Math.abs(e.deltaX) > Math.abs(e.deltaY) ? e.deltaX : e.deltaY;
+      root.scrollLeft += delta;
     };
     root.addEventListener("wheel", handleWheel, { passive: false });
 
@@ -509,9 +511,9 @@ export default function MasonrySection({ locale = "es" }: { locale?: string }) {
                     {/* Imagen */}
                     <div style={{ position:"relative", overflow:"hidden", flex:"1 1 auto", minHeight:"60px" }}>
                       {img ? (
-                        <img src={img} alt={title} style={{ width:"100%", height:"100%", objectFit:"cover", display:"block" }}/>
+                        <img src={img} alt={title} style={{ position:"absolute", inset:0, width:"100%", height:"100%", objectFit:"cover", display:"block" }}/>
                       ) : (
-                        <div style={{ width:"100%", height:"100%", background:BG_SOFT }}/>
+                        <div style={{ position:"absolute", inset:0, background:BG_SOFT }}/>
                       )}
                       {p.tipo && (
                         <div style={{
