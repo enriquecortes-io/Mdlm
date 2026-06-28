@@ -462,7 +462,7 @@ export default function MasonrySection({ locale = "es" }: { locale?: string }) {
       </div>
 
       {/* Carrusel horizontal — 2 cards por pagina, snap nativo */}
-      <div ref={carouselRef} style={{
+      <div ref={carouselRef} data-masonry-scroll style={{
         flex:1, minHeight:0,
         overflowX:"auto", overflowY:"hidden",
         WebkitOverflowScrolling:"touch",
