@@ -534,13 +534,13 @@ export default function MasonrySection({ locale = "es" }: { locale?: string }) {
                     <div style={{
                       padding:"0.7rem 0.9rem", background:BG,
                       display:"flex", flexDirection:"column",
-                      flex:"0 0 150px",
+                      flex:"0 0 210px",
                       overflowY:"auto",
                     }}>
                       <div style={{ flex:"1 1 auto", minHeight:0, overflow:"hidden" }}>
                         <h3 style={{
                           fontFamily:"'Cormorant Garamond',serif",
-                          fontSize:"clamp(1.3rem,3vw,1.8rem)", fontWeight:600,
+                          fontSize:"clamp(1.1rem,2.2vw,1.4rem)", fontWeight:600,
                           letterSpacing:"0.02em",
                           color:TEXT, margin:"0 0 0.2rem", lineHeight:1.2,
                           display:"-webkit-box",
