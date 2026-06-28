@@ -285,13 +285,21 @@ export default function MasonrySection({ locale = "es" }: { locale?: string }) {
     pages.forEach((p) => observer.observe(p));
 
     // Permitir scroll horizontal con rueda de raton (deltaY) y con trackpad (deltaX).
-    // Se hace siempre de forma manual (no depender del default del navegador), porque
-    // useHomeScroll.ts tiene un listener global de wheel con preventDefault que cancelaria
-    // el scroll nativo del trackpad antes de que surta efecto.
+    // Desactivamos el scroll-snap mientras el gesto esta activo: con mandatory+stop:always
+    // WebKit puede re-encajar inmediatamente al snap point actual en el mismo frame,
+    // anulando visualmente cualquier scrollLeft +=. Lo reactivamos al soltar el gesto.
+    let snapResumeTimer: ReturnType<typeof setTimeout> | null = null;
     const handleWheel = (e: WheelEvent) => {
       e.preventDefault();
       const delta = Math.abs(e.deltaX) > Math.abs(e.deltaY) ? e.deltaX : e.deltaY;
+
+      root.style.scrollSnapType = "none";
       root.scrollLeft += delta;
+
+      if (snapResumeTimer) clearTimeout(snapResumeTimer);
+      snapResumeTimer = setTimeout(() => {
+        root.style.scrollSnapType = "x mandatory";
+      }, 150);
     };
     root.addEventListener("wheel", handleWheel, { passive: false });
 
