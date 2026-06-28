@@ -300,15 +300,7 @@ export default function MasonrySection({ locale = "es" }: { locale?: string }) {
 
   return (
     <div ref={rootRef} style={{ position:"absolute", inset:0, display:"flex", flexDirection:"column", overflow:"hidden", background:BG }}>
-      {/* DEBUG TEMPORAL — quitar después */}
-      <div style={{
-        position:"absolute", top:0, left:0, zIndex:99999,
-        background:"#00ff00", color:"#000", font:"13px monospace", fontWeight:700,
-        padding:"10px 14px", pointerEvents:"none", whiteSpace:"pre",
-        border:"3px solid red",
-      }}>
-        {`vh: ${typeof window!=="undefined"?window.innerHeight:0}\ncarouselHeight: ${carouselHeight ?? "null"}\nprops: ${properties.length} / filtered: ${filtered.length}`}
-      </div>
+
 
       {/* Header + Filtros */}
       <div data-masonry-header style={{
@@ -468,11 +460,14 @@ export default function MasonrySection({ locale = "es" }: { locale?: string }) {
                       display:"flex",
                       flex:"1 1 auto",
                       minHeight:"180px",
+                      maxHeight: carouselHeight === null ? undefined : `${(carouselHeight - 32) / 2}px`,
+                      position:"relative",
+                      overflow:"hidden",
                       opacity:0,
                     }}
                   >
                     {/* Imagen */}
-                    <div style={{ position:"relative", overflow:"hidden", width:"45%", flexShrink:0 }}>
+                    <div style={{ position:"absolute", inset:0, overflow:"hidden", width:"45%", flexShrink:0 }}>
                       {img ? (
                         <img src={img} alt={title} style={{ width:"100%", height:"100%", objectFit:"cover", display:"block" }}/>
                       ) : (
@@ -497,6 +492,8 @@ export default function MasonrySection({ locale = "es" }: { locale?: string }) {
                     <div style={{
                       padding:"0.7rem 0.9rem", background:BG,
                       display:"flex", flexDirection:"column", flex:1, minWidth:0,
+                      marginLeft:"45%", width:"55%", boxSizing:"border-box",
+                      overflowY:"auto",
                     }}>
                       <div style={{ flex:"1 1 auto", minHeight:0, overflow:"hidden" }}>
                         <h3 style={{
