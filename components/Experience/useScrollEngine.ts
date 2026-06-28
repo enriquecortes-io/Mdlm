@@ -48,16 +48,16 @@ export function useScrollEngine({
   }, []);
 
   useEffect(() => {
-    const video = videoRef.current;
+    const video = videoRef.current; // puede ser null si estamos en modo imagen (sin video_url)
     const stage = stageRef.current;
     const galleryTrack = galleryTrackRef.current;
-    if (!video || !stage || !galleryTrack) return;
+    if (!stage || !galleryTrack) return;
 
     document.body.style.overflow = "hidden";
     document.documentElement.style.overflow = "hidden";
     gsap.set(stage, { height: "100vh" });
-    
-    // Video en autoplay loop — sin scrubbing
+
+    // Video en autoplay loop — sin scrubbing (solo si existe video real)
     if (video) { video.muted = true; video.play().catch(()=>{}); }
 
     let smoothTransition = 0;
