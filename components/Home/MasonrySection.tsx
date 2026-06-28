@@ -41,10 +41,10 @@ const BG_SOFT  = "#F2EDE4";
 const BORDER   = "#DDD8D0";
 
 const T: Record<string,Record<string,string>> = {
-  es: { surface:"Superficie", bedrooms:"Hab.", bathrooms:"Baños", price:"Precio", viewProperty:"Ver propiedad", loading:"Cargando..." },
-  en: { surface:"Built", bedrooms:"Bed.", bathrooms:"Bath", price:"Price", viewProperty:"View property", loading:"Loading..." },
-  fr: { surface:"Surface", bedrooms:"Ch.", bathrooms:"SdB", price:"Prix", viewProperty:"Voir", loading:"Chargement..." },
-  ru: { surface:"Пл.", bedrooms:"Сп.", bathrooms:"Ван.", price:"Цена", viewProperty:"Смотреть", loading:"Загрузка..." },
+  es: { surface:"Superficie", bedrooms:"Hab.", bathrooms:"Baños", price:"Precio", viewProperty:"Ver propiedad", loading:"Cargando...", swipe:"Deslizar" },
+  en: { surface:"Built", bedrooms:"Bed.", bathrooms:"Bath", price:"Price", viewProperty:"View property", loading:"Loading...", swipe:"Swipe" },
+  fr: { surface:"Surface", bedrooms:"Ch.", bathrooms:"SdB", price:"Prix", viewProperty:"Voir", loading:"Chargement...", swipe:"Glisser" },
+  ru: { surface:"Пл.", bedrooms:"Сп.", bathrooms:"Ван.", price:"Цена", viewProperty:"Смотреть", loading:"Загрузка...", swipe:"Свайп" },
 };
 
 function getTitle(p: Property, locale: string) {
@@ -283,7 +283,19 @@ export default function MasonrySection({ locale = "es" }: { locale?: string }) {
     const pages = root.querySelectorAll("[data-page-idx]");
     pages.forEach((p) => observer.observe(p));
 
-    return () => observer.disconnect();
+    // Permitir scroll horizontal con la rueda del raton (deltaY -> scrollLeft)
+    const handleWheel = (e: WheelEvent) => {
+      if (Math.abs(e.deltaY) > Math.abs(e.deltaX)) {
+        e.preventDefault();
+        root.scrollLeft += e.deltaY;
+      }
+    };
+    root.addEventListener("wheel", handleWheel, { passive: false });
+
+    return () => {
+      observer.disconnect();
+      root.removeEventListener("wheel", handleWheel);
+    };
   }, [filtered.length]);
 
   // Animacion GSAP de invitacion a deslizar: flechas oscilan en ambos sentidos
@@ -440,7 +452,7 @@ export default function MasonrySection({ locale = "es" }: { locale?: string }) {
         <span style={{
           fontFamily:"'Montserrat',sans-serif", fontSize:"0.5rem",
           letterSpacing:"0.3em", textTransform:"uppercase", color:MUTED,
-        }}>deslizar</span>
+        }}>{t.swipe}</span>
         <span className="swipe-arrow-right" style={{
           color:ACCENT, fontSize:"0.9rem", opacity:0.4, display:"inline-block",
         }}>→</span>
@@ -495,7 +507,7 @@ export default function MasonrySection({ locale = "es" }: { locale?: string }) {
                     }}
                   >
                     {/* Imagen */}
-                    <div style={{ position:"relative", overflow:"hidden", flex:"1 1 55%", minHeight:0 }}>
+                    <div style={{ position:"relative", overflow:"hidden", flex:"1 1 auto", minHeight:"80px" }}>
                       {img ? (
                         <img src={img} alt={title} style={{ width:"100%", height:"100%", objectFit:"cover", display:"block" }}/>
                       ) : (
