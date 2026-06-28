@@ -1,5 +1,6 @@
 import ContactHub from "@/components/ContactHub";
 import { SpeedInsights } from "@vercel/speed-insights/next";
+import { Analytics } from "@vercel/analytics/next";
 import type { Metadata } from "next";
 import SkyBackground from "@/components/SkyBackground";
 import CookieBanner from "@/components/CookieBanner";
@@ -136,6 +137,7 @@ export default async function LocaleLayout({
         
         <ContactHub />
         <SpeedInsights />
+        <Analytics />
       </body>
     </html>
   );
