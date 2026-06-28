@@ -134,7 +134,7 @@ export function useHomeScroll({ headerRef, manifestoRef, filtersRef, carouselRef
       // Si el wheel ocurre dentro del carrusel de Masonry, dejamos que su propio
       // listener (en MasonrySection.tsx) gestione el scroll horizontal (raton/trackpad)
       // sin interferencia de este handler global de cambio de fase.
-      if (phaseRef.current === "masonry") {
+      if (phaseRef.current === "masonry" && Math.abs(e.deltaX) > Math.abs(e.deltaY)) {
         const target = e.target as HTMLElement;
         if (target?.closest?.("[data-masonry-scroll], .carousel-card")) return;
       }

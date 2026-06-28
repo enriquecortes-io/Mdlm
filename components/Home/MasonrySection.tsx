@@ -290,11 +290,14 @@ export default function MasonrySection({ locale = "es" }: { locale?: string }) {
     // anulando visualmente cualquier scrollLeft +=. Lo reactivamos al soltar el gesto.
     let snapResumeTimer: ReturnType<typeof setTimeout> | null = null;
     const handleWheel = (e: WheelEvent) => {
-      e.preventDefault();
-      const delta = Math.abs(e.deltaX) > Math.abs(e.deltaY) ? e.deltaX : e.deltaY;
+      // Solo interceptamos gestos predominantemente horizontales (deltaX > deltaY).
+      // Si el gesto es vertical, no hacemos nada aqui: dejamos que el evento siga
+      // su curso normal hacia el listener global de useHomeScroll.ts (cambio de fase).
+      if (Math.abs(e.deltaX) <= Math.abs(e.deltaY)) return;
 
+      e.preventDefault();
       root.style.scrollSnapType = "none";
-      root.scrollLeft += delta;
+      root.scrollLeft += e.deltaX;
 
       if (snapResumeTimer) clearTimeout(snapResumeTimer);
       snapResumeTimer = setTimeout(() => {
