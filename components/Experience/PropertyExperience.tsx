@@ -3,6 +3,7 @@ import { useState, useEffect } from "react";
 import { usePathname } from "next/navigation";
 import { useRef } from "react";
 import { Property } from "@/types/property";
+import { convertGDriveUrl } from "@/lib/gdrive";
 import { useScrollEngine } from "./useScrollEngine";
 import Navbar from "./Navbar";
 import ScrollIndicator from "./ScrollIndicator";
@@ -25,6 +26,7 @@ export default function PropertyExperience({ property, locale }: Props) {
   const [lightbox, setLightbox] = useState<string | null>(null);
   const [showForm, setShowForm] = useState(false);
   const images = property.galeria_urls || [];
+  const firstImageUrl = images[0] ? convertGDriveUrl(images[0]) : undefined;
   const ref = property.referencia || "";
   const galleryTrackRef = useRef<HTMLDivElement>(null);
   const descRef = useRef<HTMLDivElement>(null);
@@ -94,6 +96,7 @@ export default function PropertyExperience({ property, locale }: Props) {
           infographic1Ref={infographic1Ref}
           infographic2Ref={infographic2Ref}
           videoUrl={property.video_url}
+          imageUrl={firstImageUrl}
           m2Construidos={property.m2_construidos}
           m2Parcela={property.m2_parcela}
           habitaciones={property.habitaciones}
