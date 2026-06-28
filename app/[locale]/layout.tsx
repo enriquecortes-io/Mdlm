@@ -7,6 +7,7 @@ import CookieBanner from "@/components/CookieBanner";
 import LegalFooter from "@/components/LegalFooter";
 import WhatsAppButton from "@/components/WhatsAppButton";
 import { notFound } from "next/navigation";
+import Script from "next/script";
 
 const locales = ["en", "es", "fr", "ru"];
 import { BASE_URL } from "@/lib/config";
@@ -123,9 +124,20 @@ export default async function LocaleLayout({
       </head>
       <body style={{ background: "#FAFAF7", margin: 0 }}>
         {/* Microsoft Clarity */}
-        <script async src="https://www.googletagmanager.com/gtag/js?id=G-R597Y3M8HZ"></script>
-       <script dangerouslySetInnerHTML={{ __html: `window.dataLayer = window.dataLayer || []; function gtag(){dataLayer.push(arguments);} gtag('js', new Date()); gtag('config', 'G-R597Y3M8HZ');` }}/>
-       <script type="text/javascript" dangerouslySetInnerHTML={{ __html: `(function(c,l,a,r,i,t,y){c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);})(window, document, "clarity", "script", "wvt1b8ox5g");` }}/>
+        <Script
+          strategy="afterInteractive"
+          src="https://www.googletagmanager.com/gtag/js?id=G-R597Y3M8HZ"
+        />
+        <Script
+          id="ga4-init"
+          strategy="afterInteractive"
+          dangerouslySetInnerHTML={{ __html: `window.dataLayer = window.dataLayer || []; function gtag(){dataLayer.push(arguments);} gtag('js', new Date()); gtag('config', 'G-R597Y3M8HZ');` }}
+        />
+        <Script
+          id="clarity-init"
+          strategy="afterInteractive"
+          dangerouslySetInnerHTML={{ __html: `(function(c,l,a,r,i,t,y){c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);})(window, document, "clarity", "script", "wvt1b8ox5g");` }}
+        />
         {/* LocalBusiness Schema con coordenadas Marbella */}
         <script
           type="application/ld+json"
