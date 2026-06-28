@@ -507,7 +507,7 @@ export default function MasonrySection({ locale = "es" }: { locale?: string }) {
                     }}
                   >
                     {/* Imagen */}
-                    <div style={{ position:"relative", overflow:"hidden", flex:"1 1 auto", minHeight:"80px" }}>
+                    <div style={{ position:"relative", overflow:"hidden", flex:"1 1 auto", minHeight:"60px" }}>
                       {img ? (
                         <img src={img} alt={title} style={{ width:"100%", height:"100%", objectFit:"cover", display:"block" }}/>
                       ) : (
@@ -532,7 +532,7 @@ export default function MasonrySection({ locale = "es" }: { locale?: string }) {
                     <div style={{
                       padding:"0.7rem 0.9rem", background:BG,
                       display:"flex", flexDirection:"column",
-                      flex:"0 0 auto",
+                      flex:"0 0 150px",
                       overflowY:"auto",
                     }}>
                       <div style={{ flex:"1 1 auto", minHeight:0, overflow:"hidden" }}>
