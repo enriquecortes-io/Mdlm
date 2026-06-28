@@ -217,23 +217,6 @@ export default function MasonrySection({ locale = "es" }: { locale?: string }) {
       const footerH = footer?.getBoundingClientRect().height || 0;
       const computed = Math.max(0, total - headerH - footerH);
       setCarouselHeight(computed);
-
-      // DEBUG TEMPORAL visible en pantalla
-      let dbg = document.getElementById("__masonry_debug__");
-      if (!dbg) {
-        dbg = document.createElement("div");
-        dbg.id = "__masonry_debug__";
-        dbg.style.position = "fixed";
-        dbg.style.bottom = "10px";
-        dbg.style.left = "10px";
-        dbg.style.zIndex = "999999";
-        dbg.style.background = "red";
-        dbg.style.color = "white";
-        dbg.style.font = "16px monospace";
-        dbg.style.padding = "10px";
-        document.body.appendChild(dbg);
-      }
-      dbg.textContent = `total:${Math.round(total)} hdr:${Math.round(headerH)} ftr:${Math.round(footerH)} carH:${Math.round(computed)}`;
     };
     measure();
     const ro = new ResizeObserver(measure);
@@ -282,10 +265,16 @@ export default function MasonrySection({ locale = "es" }: { locale?: string }) {
           animatedPages.current.add(idx);
 
           const cards = pageEl.querySelectorAll(".carousel-card");
+          const texts = pageEl.querySelectorAll(".card-anim");
           gsap.fromTo(
             cards,
             { opacity: 0, scale: 0.88, y: 40 },
             { opacity: 1, scale: 1, y: 0, duration: 0.9, ease: "power3.out", stagger: 0.18 }
+          );
+          gsap.fromTo(
+            texts,
+            { opacity: 0, y: 14 },
+            { opacity: 1, y: 0, duration: 0.6, ease: "power2.out", stagger: 0.06, delay: 0.35 }
           );
         });
       },
@@ -472,10 +461,9 @@ export default function MasonrySection({ locale = "es" }: { locale?: string }) {
         }}>→</span>
       </div>
 
-      {/* Carrusel horizontal — páginas de 2 propiedades, snap nativo */}
+      {/* Carrusel horizontal — 2 cards por pagina, snap nativo */}
       <div ref={carouselRef} style={{
-        flex: carouselHeight === null ? 1 : "0 0 auto",
-        height: carouselHeight === null ? undefined : `${carouselHeight}px`,
+        flex:1, minHeight:0,
         overflowX:"auto", overflowY:"hidden",
         WebkitOverflowScrolling:"touch",
         scrollSnapType:"x mandatory",
@@ -488,19 +476,18 @@ export default function MasonrySection({ locale = "es" }: { locale?: string }) {
           return (
             <div key={pageIdx} data-page-idx={pageIdx} style={{
               flex:"0 0 100%",
-              height: carouselHeight === null ? "100%" : `${carouselHeight}px`,
+              height:"100%",
               scrollSnapAlign:"start",
               scrollSnapStop:"always",
               display:"flex",
-              flexDirection: window.innerWidth < 768 ? "column" : "row",
-              gap:"clamp(0.3rem,0.8vw,0.6rem)",
+              flexDirection:"row",
+              gap:"clamp(0.4rem,1vw,0.7rem)",
               paddingRight:"0.5rem",
               boxSizing:"border-box",
             }}>
               {pair.map((p) => {
                 const img = p.galeria_urls?.[0] ? convertGDriveUrl(p.galeria_urls[0]) : "";
                 const title = getTitle(p, locale);
-
                 return (
                   <div
                     key={p.slug}
@@ -514,14 +501,14 @@ export default function MasonrySection({ locale = "es" }: { locale?: string }) {
                       display:"flex",
                       flexDirection:"column",
                       flex:1,
+                      minWidth:0,
                       minHeight:0,
-                      position:"relative",
                       overflow:"hidden",
                       opacity:0,
                     }}
                   >
-                    {/* Imagen */}
-                    <div style={{ position:"relative", overflow:"hidden", flex:"1 1 auto", minHeight:"60px" }}>
+                    {/* Imagen — ocupa el espacio sobrante */}
+                    <div style={{ position:"relative", overflow:"hidden", flex:"1 1 auto", minHeight:0 }}>
                       {img ? (
                         <img src={img} alt={title} style={{ position:"absolute", inset:0, width:"100%", height:"100%", objectFit:"cover", display:"block" }}/>
                       ) : (
@@ -529,65 +516,55 @@ export default function MasonrySection({ locale = "es" }: { locale?: string }) {
                       )}
                       {p.tipo && (
                         <div style={{
-                          position:"absolute", top:"0.6rem", left:"0.6rem",
-                          background:ACCENT,
-                          padding:"0.25rem 0.6rem",
-                          fontFamily:"'Montserrat',sans-serif",
-                          fontSize:"0.35rem", letterSpacing:"0.2em",
-                          textTransform:"uppercase", color:"#FAF8F4",
-                          fontWeight:500,
-                        }}>
-                          {p.tipo}
-                        </div>
+                          position:"absolute", top:"0.7rem", left:"0.7rem",
+                          background:ACCENT, padding:"0.3rem 0.7rem",
+                          fontFamily:"'Montserrat',sans-serif", fontSize:"0.5rem",
+                          letterSpacing:"0.2em", textTransform:"uppercase",
+                          color:"#FAF8F4", fontWeight:500,
+                        }}>{p.tipo}</div>
                       )}
                     </div>
 
-                    {/* Info */}
+                    {/* Info — altura por contenido, nunca se la come la imagen */}
                     <div style={{
-                      padding:"0.7rem 0.9rem", background:BG,
-                      display:"flex", flexDirection:"column",
                       flex:"0 0 auto",
-                      maxHeight:"210px",
-                      overflowY:"auto",
+                      padding:"0.9rem 1rem 1rem",
+                      background:BG,
+                      display:"flex", flexDirection:"column", gap:"0.45rem",
                     }}>
-                      <div style={{ flex:"0 0 auto", overflow:"hidden" }}>
-                        <h3 style={{
-                          fontFamily:"'Cormorant Garamond',serif",
-                          fontSize:"clamp(1.1rem,2.2vw,1.4rem)", fontWeight:600,
-                          letterSpacing:"0.02em",
-                          color:TEXT, margin:"0 0 0.2rem", lineHeight:1.2,
-                          display:"-webkit-box",
-                          WebkitLineClamp:2,
-                          WebkitBoxOrient:"vertical" as any,
-                          overflow:"hidden",
-                        }}>
-                          {title}
-                        </h3>
-                        <p style={{
-                          fontFamily:"'Montserrat',sans-serif",
-                          fontSize:"0.65rem", letterSpacing:"0.1em",
-                          color:MUTED, margin:0, fontWeight:400,
-                          textTransform:"uppercase",
-                        }}>
-                          {p.ubicacion}
-                        </p>
-                      </div>
-                      <div style={{ marginTop:"0.5rem", flexShrink:0 }}>
-                        <p style={{
-                          fontFamily:"'Cormorant Garamond',serif",
-                          fontSize:"clamp(1.4rem,3.2vw,1.7rem)", fontWeight:500,
-                          color:ACCENT, margin:"0 0 0.35rem", lineHeight:1,
-                        }}>
-                          €{p.precio?.toLocaleString()}
-                        </p>
-                        {(p.m2_construidos > 0 || p.habitaciones > 0) && (
-                          <div style={{ display:"flex", gap:"0.8rem", borderTop:`1px solid ${BORDER}`, paddingTop:"0.4rem", flexWrap:"wrap" }}>
-                            {p.m2_construidos > 0 && <span style={{ fontFamily:"'Montserrat',sans-serif", fontSize:"0.42rem", letterSpacing:"0.1em", color:MUTED }}>{p.m2_construidos} m²</span>}
-                            {p.habitaciones > 0 && <span style={{ fontFamily:"'Montserrat',sans-serif", fontSize:"0.42rem", letterSpacing:"0.1em", color:MUTED }}>{p.habitaciones} {t.bedrooms}</span>}
-                            {p.banos > 0 && <span style={{ fontFamily:"'Montserrat',sans-serif", fontSize:"0.42rem", letterSpacing:"0.1em", color:MUTED }}>{p.banos} {t.bathrooms}</span>}
-                          </div>
-                        )}
-                      </div>
+                      {/* Nombre */}
+                      <h3 className="card-anim" style={{
+                        fontFamily:"'Cormorant Garamond',serif",
+                        fontSize:"clamp(1.2rem,2.4vw,1.7rem)", fontWeight:600,
+                        letterSpacing:"0.01em", color:TEXT, margin:0, lineHeight:1.15,
+                        display:"-webkit-box", WebkitLineClamp:1,
+                        WebkitBoxOrient:"vertical" as any, overflow:"hidden",
+                      }}>{title}</h3>
+
+                      {/* Ubicacion */}
+                      <p className="card-anim" style={{
+                        fontFamily:"'Montserrat',sans-serif", fontSize:"0.6rem",
+                        letterSpacing:"0.18em", color:MUTED, margin:0, fontWeight:400,
+                        textTransform:"uppercase",
+                        whiteSpace:"nowrap", overflow:"hidden", textOverflow:"ellipsis",
+                      }}>{p.ubicacion}</p>
+
+                      {/* Datos */}
+                      {(p.m2_construidos > 0 || p.habitaciones > 0 || p.banos > 0) && (
+                        <div className="card-anim" style={{ display:"flex", gap:"1rem", flexWrap:"wrap" }}>
+                          {p.m2_construidos > 0 && <span style={{ fontFamily:"'Montserrat',sans-serif", fontSize:"0.6rem", letterSpacing:"0.08em", color:TEXT2 }}>{p.m2_construidos} m²</span>}
+                          {p.habitaciones > 0 && <span style={{ fontFamily:"'Montserrat',sans-serif", fontSize:"0.6rem", letterSpacing:"0.08em", color:TEXT2 }}>{p.habitaciones} {t.bedrooms}</span>}
+                          {p.banos > 0 && <span style={{ fontFamily:"'Montserrat',sans-serif", fontSize:"0.6rem", letterSpacing:"0.08em", color:TEXT2 }}>{p.banos} {t.bathrooms}</span>}
+                        </div>
+                      )}
+
+                      {/* Precio */}
+                      <p className="card-anim" style={{
+                        fontFamily:"'Cormorant Garamond',serif",
+                        fontSize:"clamp(1.4rem,3vw,1.9rem)", fontWeight:500,
+                        color:ACCENT, margin:"0.1rem 0 0", lineHeight:1,
+                        borderTop:`1px solid ${BORDER}`, paddingTop:"0.6rem",
+                      }}>€{p.precio?.toLocaleString()}</p>
                     </div>
                   </div>
                 );
