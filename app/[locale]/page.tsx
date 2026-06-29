@@ -8,7 +8,7 @@ export default async function HomePage({ params }: Props) {
   const { locale } = await params;
   return (
     <>
-      <Navbar locale={locale} />
+      <Navbar locale={locale} showSocial />
       <HomeExperience locale={locale} />
     </>
   );

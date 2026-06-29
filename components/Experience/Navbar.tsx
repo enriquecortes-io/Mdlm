@@ -19,9 +19,9 @@ const LANGS = [
   { code: "ru", label: "RU", name: "Русский" },
 ];
 
-interface Props { locale?: string; onPrivateAccess?: () => void; }
+interface Props { locale?: string; onPrivateAccess?: () => void; showSocial?: boolean; }
 
-export default function Navbar({ locale = "es", onPrivateAccess }: Props) {
+export default function Navbar({ locale = "es", onPrivateAccess, showSocial = false }: Props) {
   const [open, setOpen] = useState(false);
   const router = useRouter();
   const pathname = usePathname();
@@ -87,8 +87,27 @@ export default function Navbar({ locale = "es", onPrivateAccess }: Props) {
           )}
         </div>
 
-        {/* Selector de idioma desplegable */}
-        <div style={{ position:"relative", justifySelf:"end" }}>
+        {/* Selector de idioma + redes sociales */}
+        <div style={{ position:"relative", justifySelf:"end", display:"flex", alignItems:"center", gap:"1rem" }}>
+          {showSocial && (
+            <div style={{ display:"flex", alignItems:"center", gap:"0.8rem" }}>
+              <a href="https://www.instagram.com/theeditmarbella/" target="_blank" rel="noopener noreferrer" style={{ color:"#2D4A3E", display:"flex" }}>
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5">
+                  <rect x="2" y="2" width="20" height="20" rx="5"/>
+                  <circle cx="12" cy="12" r="4"/>
+                  <circle cx="17.5" cy="6.5" r="0.5" fill="currentColor"/>
+                </svg>
+              </a>
+              <a href="https://www.linkedin.com/company/130454848/" target="_blank" rel="noopener noreferrer" style={{ color:"#2D4A3E", display:"flex" }}>
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5">
+                  <path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-4 0v7h-4V8h4v1.5A5 5 0 0 1 16 8z"/>
+                  <rect x="2" y="9" width="4" height="12"/>
+                  <circle cx="4" cy="4" r="2" fill="currentColor"/>
+                </svg>
+              </a>
+            </div>
+          )}
+          <div style={{ position:"relative" }}>
           <button
             onClick={() => setOpen(p => !p)}
             style={{
@@ -166,6 +185,7 @@ export default function Navbar({ locale = "es", onPrivateAccess }: Props) {
               ))}
             </div>
           )}
+          </div>
         </div>
       </nav>
 
