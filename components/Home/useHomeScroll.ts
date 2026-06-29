@@ -138,6 +138,16 @@ export function useHomeScroll({ headerRef, manifestoRef, filtersRef, carouselRef
         const target = e.target as HTMLElement;
         if (target?.closest?.("[data-masonry-scroll], .carousel-card")) return;
       }
+      // En fase captacion, si el contenedor (formulario + footer) aun tiene scroll
+      // vertical pendiente (no esta en el tope/fondo), dejamos pasar el wheel nativo
+      // del trackpad/raton en vez de bloquearlo con preventDefault.
+      if (phaseRef.current === "captacion" && captacionRef?.current) {
+        const el = captacionRef.current;
+        const atTop = el.scrollTop <= 2;
+        const atBottom = el.scrollTop + el.clientHeight >= el.scrollHeight - 2;
+        if (e.deltaY > 0 && !atBottom) return;
+        if (e.deltaY < 0 && !atTop) return;
+      }
       e.preventDefault();
       const now = Date.now();
       if (now - lastPhaseChange < PHASE_COOLDOWN) return;
