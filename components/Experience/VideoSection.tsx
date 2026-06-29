@@ -49,7 +49,9 @@ export default function VideoSection({
       if (!el || !dbg) return;
       const r = el.getBoundingClientRect();
       const cs = window.getComputedStyle(el);
-      dbg.textContent = `vw:${window.innerWidth} wrap1[top:${Math.round(r.top)} h:${Math.round(r.height)} bottom-css:${cs.bottom} top-css:${cs.top}]`;
+      const mq = window.matchMedia("(max-width: 768px)").matches;
+      const styleTags = Array.from(document.querySelectorAll("style")).filter(s => s.textContent?.includes("inf-wrapper-1")).length;
+      dbg.textContent = `vw:${window.innerWidth} mq:${mq} styleTags:${styleTags} top-css:${cs.top} bottom-css:${cs.bottom} h:${Math.round(r.height)}`;
     };
     measure();
     window.addEventListener("resize", measure);
