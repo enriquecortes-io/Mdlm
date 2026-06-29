@@ -337,6 +337,12 @@ export default function MasonrySection({ locale = "es" }: { locale?: string }) {
   const toggleFilter = (id: string, val: string) => {
     setFilters(prev => ({ ...prev, [id]: prev[id] === val ? "" : val }));
     setActiveFilter(null);
+    // Al cambiar un filtro, el carrusel puede quedar en una pagina que ya no
+    // existe con el nuevo subconjunto filtrado (mostrando vacio aunque haya
+    // resultados). Volvemos siempre a la primera pagina.
+    requestAnimationFrame(() => {
+      if (carouselRef.current) carouselRef.current.scrollTo({ left: 0, behavior: "auto" });
+    });
   };
 
   const getFilterLabel = (f: typeof FILTERS_DEF[0]) => {
