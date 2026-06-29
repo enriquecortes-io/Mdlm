@@ -9,8 +9,9 @@ import CruceVentas from "./CruceVentas";
 import FeedsPanel from "./FeedsPanel";
 import Users from "./Users";
 import Dashboard from "./Dashboard";
+import Newsletter from "./Newsletter";
 
-type Section = "dashboard" | "portfolio" | "new" | "leads" | "captacion" | "contactos" | "cruce" | "feeds" | "users";
+type Section = "dashboard" | "portfolio" | "new" | "leads" | "captacion" | "contactos" | "cruce" | "feeds" | "users" | "newsletter";
 
 export default function AdminPanel() {
   const [password, setPassword] = useState("");
@@ -113,6 +114,7 @@ export default function AdminPanel() {
     { id:"cruce",     icon:"🔗", label:"Cruce de Ventas" },
     { id:"feeds",     icon:"📡", label:"Portales / Feeds" },
     { id:"users",     icon:"👤", label:"Usuarios" },
+    { id:"newsletter", icon:"✉️", label:"Newsletter" },
   ];
 
   return (
@@ -180,6 +182,7 @@ export default function AdminPanel() {
         {section === "dashboard" && <Dashboard password={password} />}
         {section === "feeds" && <FeedsPanel />}
         {section === "users" && <Users password={password} />}
+        {section === "newsletter" && <Newsletter />}
       </div>
     </div>
   );
