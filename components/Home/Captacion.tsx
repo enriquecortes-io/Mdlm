@@ -1,5 +1,6 @@
 "use client";
 import NeonButton from "@/components/ui/NeonButton";
+import SiteFooter from "./SiteFooter";
 import { forwardRef, useState } from "react";
 
 interface Props { locale: string; }
@@ -295,6 +296,10 @@ const Captacion = forwardRef<HTMLDivElement, Props>(({ locale }, ref) => {
 
         {/* Línea dorada inferior */}
         <div style={{ position:"absolute", bottom:0, left:"10%", right:"10%", height:"1px", background:"linear-gradient(90deg,transparent,rgba(201,169,110,0.4),transparent)" }}/>
+      </div>
+
+      <div style={{ width:"100%", maxWidth:"1000px" }}>
+        <SiteFooter locale={locale} />
       </div>
     </div>
   );
