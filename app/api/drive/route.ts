@@ -1,5 +1,14 @@
 import { NextRequest, NextResponse } from "next/server";
 import { google } from "googleapis";
+import sharp from "sharp";
+
+async function streamToBuffer(stream: any): Promise<Buffer> {
+  const chunks: Buffer[] = [];
+  for await (const chunk of stream) {
+    chunks.push(Buffer.isBuffer(chunk) ? chunk : Buffer.from(chunk));
+  }
+  return Buffer.concat(chunks);
+}
 
 function getAuth() {
   const json = process.env.GOOGLE_SERVICE_ACCOUNT_JSON;
@@ -63,7 +72,36 @@ export async function GET(req: NextRequest) {
       });
     }
 
-    // Imágenes y otros archivos
+    // Imágenes: redimensionar + convertir a WebP on-the-fly (peso real reducido)
+    const isImage = mimeType.startsWith("image");
+    const widthParam = req.nextUrl.searchParams.get("w");
+    const targetWidth = widthParam ? parseInt(widthParam) : null;
+
+    if (isImage) {
+      const response = await drive.files.get(
+        { fileId: id, alt: "media" },
+        { responseType: "stream" }
+      );
+      const buffer = await streamToBuffer(response.data as any);
+
+      let pipeline = sharp(buffer).rotate(); // rotate() respeta el EXIF orientation
+      if (targetWidth && targetWidth > 0 && targetWidth < 4000) {
+        pipeline = pipeline.resize({ width: targetWidth, withoutEnlargement: true });
+      } else {
+        // Sin parametro w: limitamos a un maximo razonable (evita servir 6000px de Drive)
+        pipeline = pipeline.resize({ width: 1600, withoutEnlargement: true });
+      }
+      const webpBuffer = await pipeline.webp({ quality: 78 }).toBuffer();
+
+      return new NextResponse(webpBuffer, {
+        headers: {
+          "Content-Type": "image/webp",
+          "Cache-Control": "public, max-age=2592000, immutable",
+        },
+      });
+    }
+
+    // Otros archivos (no imagen, no video): se sirven tal cual
     const response = await drive.files.get(
       { fileId: id, alt: "media" },
       { responseType: "stream" }
