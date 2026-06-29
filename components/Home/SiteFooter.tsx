@@ -138,14 +138,14 @@ export default function SiteFooter({ locale = "es" }: Props) {
         <div style={{ display: "flex", flexDirection: "column", gap: "0.6rem", minWidth: "140px" }}>
           <span style={{ fontSize: "0.6rem", letterSpacing: "0.2em", textTransform: "uppercase", color: ACCENT, fontWeight: 600 }}>Social</span>
           <div style={{ display: "flex", gap: "0.9rem" }}>
-            <a href="https://www.instagram.com/theeditmarbella/" target="_blank" rel="noopener noreferrer" style={{ color: MUTED }}>
+            <a href="https://www.instagram.com/theeditmarbella/" target="_blank" rel="noopener noreferrer" aria-label="Instagram" style={{ color: MUTED }}>
               <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5">
                 <rect x="2" y="2" width="20" height="20" rx="5"/>
                 <circle cx="12" cy="12" r="4"/>
                 <circle cx="17.5" cy="6.5" r="0.5" fill="currentColor"/>
               </svg>
             </a>
-            <a href="https://www.linkedin.com/company/130454848/" target="_blank" rel="noopener noreferrer" style={{ color: MUTED }}>
+            <a href="https://www.linkedin.com/company/130454848/" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn" style={{ color: MUTED }}>
               <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5">
                 <path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-4 0v7h-4V8h4v1.5A5 5 0 0 1 16 8z"/>
                 <rect x="2" y="9" width="4" height="12"/>
