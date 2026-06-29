@@ -4,7 +4,7 @@ import { getSupabase } from "@/lib/supabase";
 export const revalidate = 60;
 
 const CARD_FIELDS =
-  "slug,titulo,descripcion,precio,ubicacion,m2_construidos,m2_parcela,habitaciones,banos,galeria_urls";
+  "slug,titulo,descripcion,precio,ubicacion,zona,tipo,m2_construidos,m2_parcela,habitaciones,banos,galeria_urls";
 
 export async function GET() {
   try {
