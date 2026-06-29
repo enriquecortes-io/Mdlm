@@ -13,7 +13,7 @@ export function convertGDriveUrl(url: string, width = 1200, quality = 80): strin
   for (const pattern of patterns) {
     const match = url.match(pattern);
     if (match) {
-      return `/api/drive?id=${match[1]}`;
+      return `/api/drive?id=${match[1]}&w=${width}`;
     }
   }
 
