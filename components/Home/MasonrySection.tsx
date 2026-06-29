@@ -340,6 +340,11 @@ export default function MasonrySection({ locale = "es" }: { locale?: string }) {
     // Al cambiar un filtro, el carrusel puede quedar en una pagina que ya no
     // existe con el nuevo subconjunto filtrado (mostrando vacio aunque haya
     // resultados). Volvemos siempre a la primera pagina.
+    // Tambien limpiamos animatedPages: el indice de pagina puede coincidir con
+    // uno ya animado del filtro anterior (otras propiedades), dejando las
+    // cards nuevas en opacity:0 para siempre porque el observer no reanima
+    // una pagina que ya marco como vista.
+    animatedPages.current.clear();
     requestAnimationFrame(() => {
       if (carouselRef.current) carouselRef.current.scrollTo({ left: 0, behavior: "auto" });
     });
