@@ -42,9 +42,19 @@ export default function VideoSection({
     <>
       <style>{`
         @media (max-width: 768px) {
-          .inf-wrapper-1 { justify-content: flex-start !important; align-items: flex-end !important; padding: 0 0 35vh 1.5rem !important; }
-          .inf-wrapper-2 { justify-content: flex-end !important; align-items: flex-start !important; padding: 15vh 1.5rem 0 0 !important; }
-          .inf-box { max-width: 48vw !important; }
+          /* Dividimos la pantalla en dos mitades verticales sin solape posible,
+             en vez de esquinar con padding (que se cruzaba si el contenido era alto). */
+          .inf-wrapper-1 {
+            top: 0 !important; bottom: 50% !important; left: 0 !important; right: 0 !important; inset: auto !important;
+            justify-content: flex-start !important; align-items: flex-end !important;
+            padding: 0 0 1rem 1.5rem !important;
+          }
+          .inf-wrapper-2 {
+            top: 50% !important; bottom: 0 !important; left: 0 !important; right: 0 !important; inset: auto !important;
+            justify-content: flex-end !important; align-items: flex-start !important;
+            padding: 1rem 1.5rem 0 0 !important;
+          }
+          .inf-box { max-width: 70vw !important; max-height: 100% !important; overflow: hidden !important; }
         }
       `}</style>
       <div style={{ position:"absolute", top:0, left:0, width:"100%", height:"100vh", overflow:"hidden" }}>
