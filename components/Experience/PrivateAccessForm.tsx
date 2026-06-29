@@ -103,8 +103,8 @@ export default function PrivateAccessForm({ locale, propertyTitle, propertySlug 
     width:"100%",
     background:"transparent",
     border:"none",
-    borderBottom:`1px solid rgba(255,255,255,${focused===field?0.6:0.25})`,
-    color:"white",
+    borderBottom:`1px solid rgba(26,23,20,${focused===field?0.5:0.18})`,
+    color:"#1A1714",
     fontFamily:"'Montserrat','Helvetica Neue',sans-serif",
     fontSize:"clamp(1rem,1.8vw,1.3rem)",
     fontWeight:200,
@@ -132,7 +132,7 @@ export default function PrivateAccessForm({ locale, propertyTitle, propertySlug 
           fontFamily:"'Montserrat','Helvetica Neue',sans-serif",
           fontSize:"clamp(1.5rem,3vw,2.2rem)",
           fontWeight:300,
-          color:"#ffffff",
+          color:"#1A1714",
           letterSpacing:"-0.02em",
           lineHeight:1.2,
           margin:"0 0 1.5rem",
@@ -142,7 +142,7 @@ export default function PrivateAccessForm({ locale, propertyTitle, propertySlug 
           fontFamily:"'Montserrat','Helvetica Neue',sans-serif",
           fontSize:"clamp(0.9rem,1.5vw,1.1rem)",
           fontWeight:300,
-          color:"rgba(255,255,255,0.75)",
+          color:"rgba(26,23,20,0.65)",
           lineHeight:1.8,
           margin:"0 0 2rem",
           letterSpacing:"0.01em",
@@ -158,7 +158,7 @@ export default function PrivateAccessForm({ locale, propertyTitle, propertySlug 
             <p style={{
               fontFamily:"'Montserrat','Helvetica Neue',sans-serif",
               fontSize:"clamp(0.8rem,1.2vw,1rem)",
-              fontWeight:200, color:"rgba(255,255,255,0.7)",
+              fontWeight:200, color:"rgba(26,23,20,0.6)",
               letterSpacing:"0.02em", lineHeight:1.8,
             }}>{c.success}</p>
           </div>
@@ -167,7 +167,7 @@ export default function PrivateAccessForm({ locale, propertyTitle, propertySlug 
 
             {/* Nombre */}
             <div>
-              <label style={{ display:"block", fontFamily:"'Montserrat','Helvetica Neue',sans-serif", fontSize:"0.65rem", color:"rgba(255,255,255,0.85)", letterSpacing:"0.25em", textTransform:"uppercase", marginBottom:"0.5rem" }}>
+              <label style={{ display:"block", fontFamily:"'Montserrat','Helvetica Neue',sans-serif", fontSize:"0.65rem", color:"rgba(26,23,20,0.7)", letterSpacing:"0.25em", textTransform:"uppercase", marginBottom:"0.5rem" }}>
                 {c.fields.name}
               </label>
               <input
@@ -182,7 +182,7 @@ export default function PrivateAccessForm({ locale, propertyTitle, propertySlug 
             {/* Email + Telefono en fila */}
             <div style={{ display:"grid", gridTemplateColumns:"1fr 1fr", gap:"2rem" }}>
               <div>
-                <label style={{ display:"block", fontFamily:"'Montserrat','Helvetica Neue',sans-serif", fontSize:"0.65rem", color:"rgba(255,255,255,0.85)", letterSpacing:"0.25em", textTransform:"uppercase", marginBottom:"0.5rem" }}>
+                <label style={{ display:"block", fontFamily:"'Montserrat','Helvetica Neue',sans-serif", fontSize:"0.65rem", color:"rgba(26,23,20,0.7)", letterSpacing:"0.25em", textTransform:"uppercase", marginBottom:"0.5rem" }}>
                   {c.fields.email}
                 </label>
                 <input
@@ -194,7 +194,7 @@ export default function PrivateAccessForm({ locale, propertyTitle, propertySlug 
                 />
               </div>
               <div>
-                <label style={{ display:"block", fontFamily:"'Montserrat','Helvetica Neue',sans-serif", fontSize:"0.65rem", color:"rgba(255,255,255,0.85)", letterSpacing:"0.25em", textTransform:"uppercase", marginBottom:"0.5rem" }}>
+                <label style={{ display:"block", fontFamily:"'Montserrat','Helvetica Neue',sans-serif", fontSize:"0.65rem", color:"rgba(26,23,20,0.7)", letterSpacing:"0.25em", textTransform:"uppercase", marginBottom:"0.5rem" }}>
                   {c.fields.phone}
                 </label>
                 <input
@@ -209,7 +209,7 @@ export default function PrivateAccessForm({ locale, propertyTitle, propertySlug 
 
             {/* Horizonte */}
             <div>
-              <label style={{ display:"block", fontFamily:"'Montserrat','Helvetica Neue',sans-serif", fontSize:"0.65rem", color:"rgba(255,255,255,0.85)", letterSpacing:"0.25em", textTransform:"uppercase", marginBottom:"0.8rem" }}>
+              <label style={{ display:"block", fontFamily:"'Montserrat','Helvetica Neue',sans-serif", fontSize:"0.65rem", color:"rgba(26,23,20,0.7)", letterSpacing:"0.25em", textTransform:"uppercase", marginBottom:"0.8rem" }}>
                 {c.fields.horizon}
               </label>
               <div style={{ display:"flex", gap:"1rem", flexWrap:"wrap" }}>
@@ -218,8 +218,8 @@ export default function PrivateAccessForm({ locale, propertyTitle, propertySlug 
                     onClick={() => setForm(p=>({...p,horizon:opt}))}
                     style={{
                       background: form.horizon===opt ? "rgba(201,169,110,0.08)" : "none",
-                      border:`1px solid rgba(255,255,255,${form.horizon===opt?0.6:0.25})`,
-                      color: form.horizon===opt ? "#c9a96e" : "rgba(255,255,255,0.55)",
+                      border:`1px solid rgba(26,23,20,${form.horizon===opt?0.5:0.18})`,
+                      color: form.horizon===opt ? "#c9a96e" : "rgba(26,23,20,0.45)",
                       fontFamily:"'Montserrat','Helvetica Neue',sans-serif",
                       fontSize:"0.65rem", letterSpacing:"0.2em",
                       padding:"0.8rem 1.8rem", cursor:"pointer",
@@ -243,7 +243,7 @@ export default function PrivateAccessForm({ locale, propertyTitle, propertySlug 
               <span style={{
                 fontFamily:"'Montserrat',sans-serif",
                 fontSize:"0.6rem", fontWeight:200,
-                color:"rgba(255,255,255,0.45)",
+                color:"rgba(26,23,20,0.4)",
                 lineHeight:1.7,
               }}>
                 {({"es":"He leído y acepto la ","en":"I have read and accept the ","fr":"J'ai lu et j'accepte la ","ru":"Я прочитал и принимаю "} as Record<string,string>)[locale]}
