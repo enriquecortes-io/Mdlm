@@ -4,7 +4,7 @@ import { useState } from "react";
 
 interface Props { locale: string; }
 
-const ACCENT = "#c9a96e";
+const ACCENT = "#2D4A3E";
 const TEXT = "#1A1714";
 const MUTED = "rgba(26,23,20,0.55)";
 const BORDER = "rgba(26,23,20,0.1)";
