@@ -58,6 +58,8 @@ export default function VideoSection({
              en el mismo elemento provoca un bug de WebKit que hace desaparecer
              el elemento entero en vez de solo recortarlo. */
           .inf-box { max-width: 70vw !important; }
+          .inf-wrapper-1 { border: 4px solid red !important; }
+          .inf-wrapper-2 { border: 4px solid blue !important; }
         }
       `}</style>
       <div style={{ position:"absolute", top:0, left:0, width:"100%", height:"100vh", overflow:"hidden" }}>
