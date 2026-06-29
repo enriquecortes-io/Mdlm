@@ -54,7 +54,10 @@ export default function VideoSection({
             justify-content: flex-end !important; align-items: flex-start !important;
             padding: 1rem 1.5rem 0 0 !important;
           }
-          .inf-box { max-width: 70vw !important; max-height: 100% !important; overflow: hidden !important; }
+          /* Quitamos overflow:hidden aqui — combinado con backdrop-filter + transform 3D
+             en el mismo elemento provoca un bug de WebKit que hace desaparecer
+             el elemento entero en vez de solo recortarlo. */
+          .inf-box { max-width: 70vw !important; }
         }
       `}</style>
       <div style={{ position:"absolute", top:0, left:0, width:"100%", height:"100vh", overflow:"hidden" }}>
