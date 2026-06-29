@@ -262,21 +262,21 @@ export default function PrivateAccessForm({ locale, propertyTitle, propertySlug 
               onClick={handleSubmit}
               disabled={status==="sending" || !form.name || !form.email || !form.phone || !form.horizon || !form.privacy}
               style={{
-                background:"none",
-                border:`1px solid rgba(201,169,110,${!form.name||!form.email||!form.phone||!form.horizon?0.2:0.5})`,
-                color: !form.name||!form.email||!form.phone||!form.horizon ? "rgba(201,169,110,0.3)" : "#c9a96e",
+                background: !form.name||!form.email||!form.phone||!form.horizon||!form.privacy ? "rgba(45,74,62,0.3)" : "#2D4A3E",
+                border:"none",
+                color:"#fff",
                 fontFamily:"'Montserrat','Helvetica Neue',sans-serif",
-                fontSize:"0.7rem", letterSpacing:"0.5em",
+                fontSize:"0.7rem", letterSpacing:"0.5em", fontWeight:600,
                 textTransform:"uppercase", padding:"1.2rem 3rem",
-                cursor: !form.name||!form.email||!form.phone||!form.horizon ? "default" : "pointer",
-                transition:"all 0.4s ease",
+                cursor: !form.name||!form.email||!form.phone||!form.horizon||!form.privacy ? "default" : "pointer",
+                transition:"all 0.3s ease",
                 alignSelf:"flex-start",
               }}
               onMouseEnter={e => {
-                if (form.name&&form.email&&form.phone&&form.horizon)
-                  e.currentTarget.style.background="rgba(201,169,110,0.1)";
+                if (form.name&&form.email&&form.phone&&form.horizon&&form.privacy)
+                  e.currentTarget.style.opacity="0.85";
               }}
-              onMouseLeave={e => { e.currentTarget.style.background="none"; }}
+              onMouseLeave={e => { e.currentTarget.style.opacity="1"; }}
             >
               {status==="sending" ? c.sending : c.submit}
             </button>
