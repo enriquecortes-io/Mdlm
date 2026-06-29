@@ -40,18 +40,22 @@ export default function SiteFooter({ locale = "es" }: Props) {
   const t = T[locale] || T.es;
   const [email, setEmail] = useState("");
   const [sent, setSent] = useState(false);
+  const [error, setError] = useState(false);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!email) return;
     try {
-      await fetch("/api/contact", {
+      const res = await fetch("/api/newsletter", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ email, type: "newsletter" }),
+        body: JSON.stringify({ email, locale }),
       });
-    } catch {}
-    setSent(true);
+      if (!res.ok) throw new Error("fail");
+      setSent(true);
+    } catch {
+      setError(true);
+    }
   };
 
   return (
@@ -78,6 +82,12 @@ export default function SiteFooter({ locale = "es" }: Props) {
         {sent ? (
           <p style={{ fontSize: "0.7rem", color: ACCENT, marginTop: "0.5rem" }}>{t.sent}</p>
         ) : (
+          <>
+          {error && (
+            <p style={{ fontSize: "0.65rem", color: "#b04444", marginTop: "0.3rem" }}>
+              {locale === "en" ? "Something went wrong, please try again." : "Algo salió mal, inténtelo de nuevo."}
+            </p>
+          )}
           <form onSubmit={handleSubmit} style={{
             display: "flex", gap: "0.5rem", marginTop: "0.6rem",
             width: "100%", maxWidth: "380px",
@@ -98,6 +108,7 @@ export default function SiteFooter({ locale = "es" }: Props) {
               border: "none", cursor: "pointer", fontWeight: 600,
             }}>{t.send}</button>
           </form>
+          </>
         )}
       </div>
 
