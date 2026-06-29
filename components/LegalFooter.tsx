@@ -10,7 +10,7 @@ export default function LegalFooter() {
 
   useEffect(() => {
     const handler = (e: Event) => {
-      const phase = (e as CustomEvent).detail; setVisible(phase === "filters" || phase === "captacion");
+      const phase = (e as CustomEvent).detail; setVisible(phase === "filters");
     };
     window.addEventListener("scrollphase", handler);
     return () => window.removeEventListener("scrollphase", handler);
