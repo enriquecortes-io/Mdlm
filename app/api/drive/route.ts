@@ -93,7 +93,7 @@ export async function GET(req: NextRequest) {
       }
       const webpBuffer = await pipeline.webp({ quality: 78 }).toBuffer();
 
-      return new NextResponse(webpBuffer, {
+      return new NextResponse(new Uint8Array(webpBuffer), {
         headers: {
           "Content-Type": "image/webp",
           "Cache-Control": "public, max-age=2592000, immutable",
