@@ -40,22 +40,44 @@ export default function VideoSection({
 }: VideoSectionProps) {
   const hasVideo = !!videoUrl;
   const fallbackVideo = "/videos/hero.mp4";
-  const dbgRef = useReactRef<HTMLDivElement>(null);
-
+  // En movil, el inset:0 inline tiene mayor especificidad que cualquier clase CSS
+  // (inline style siempre gana). Aplicamos el posicionamiento via JS directamente.
   useEffect(() => {
-    const measure = () => {
-      const el = document.querySelector(".inf-wrapper-1") as HTMLElement | null;
-      const dbg = dbgRef.current;
-      if (!el || !dbg) return;
-      const r = el.getBoundingClientRect();
-      const cs = window.getComputedStyle(el);
-      const mq = window.matchMedia("(max-width: 768px)").matches;
-      const styleTags = Array.from(document.querySelectorAll("style")).filter(s => s.textContent?.includes("inf-wrapper-1")).length;
-      dbg.textContent = `vw:${window.innerWidth} mq:${mq} styleTags:${styleTags} top-css:${cs.top} bottom-css:${cs.bottom} h:${Math.round(r.height)}`;
+    const apply = () => {
+      const w1 = document.querySelector(".inf-wrapper-1") as HTMLElement | null;
+      const w2 = document.querySelector(".inf-wrapper-2") as HTMLElement | null;
+      if (!w1 || !w2) return;
+      const isMobile = window.innerWidth <= 768;
+      if (isMobile) {
+        // Mitad superior para infografico 1
+        w1.style.top = "0px";
+        w1.style.bottom = "50%";
+        w1.style.left = "0px";
+        w1.style.right = "0px";
+        w1.style.inset = "unset";
+        w1.style.justifyContent = "flex-start";
+        w1.style.alignItems = "flex-end";
+        w1.style.padding = "0 0 1rem 1.5rem";
+        // Mitad inferior para infografico 2
+        w2.style.top = "50%";
+        w2.style.bottom = "0px";
+        w2.style.left = "0px";
+        w2.style.right = "0px";
+        w2.style.inset = "unset";
+        w2.style.justifyContent = "flex-end";
+        w2.style.alignItems = "flex-start";
+        w2.style.padding = "1rem 1.5rem 0 0";
+      } else {
+        // Desktop: restaurar valores por defecto (dejar que el CSS inline del JSX mande)
+        ["top","bottom","left","right","inset","justifyContent","alignItems","padding"].forEach(p => {
+          w1.style[p as any] = "";
+          w2.style[p as any] = "";
+        });
+      }
     };
-    measure();
-    window.addEventListener("resize", measure);
-    return () => window.removeEventListener("resize", measure);
+    apply();
+    window.addEventListener("resize", apply);
+    return () => window.removeEventListener("resize", apply);
   }, []);
 
   return (
@@ -82,14 +104,7 @@ export default function VideoSection({
           .inf-wrapper-2 { border: 4px solid blue !important; }
         }
       `}</style>
-      <div
-        ref={dbgRef}
-        style={{
-          position:"fixed", top:"70px", left:"10px", zIndex:999999,
-          background:"lime", color:"#000", font:"11px monospace", fontWeight:700,
-          padding:"6px 8px", maxWidth:"95vw", wordBreak:"break-all",
-        }}
-      />
+
       <div style={{ position:"absolute", top:0, left:0, width:"100%", height:"100vh", overflow:"hidden" }}>
         {hasVideo ? (
           <video
