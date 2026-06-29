@@ -31,6 +31,8 @@ interface VideoSectionProps {
   inf2?: { label: InfText; titulo: InfText; subtitulo: InfText; texto: InfText } | null;
 }
 
+import { useEffect, useRef as useReactRef } from "react";
+
 export default function VideoSection({
   videoRef, infographic1Ref, infographic2Ref,
   videoUrl, imageUrl, locale = "es",
@@ -38,6 +40,22 @@ export default function VideoSection({
 }: VideoSectionProps) {
   const hasVideo = !!videoUrl;
   const fallbackVideo = "/videos/hero.mp4";
+  const dbgRef = useReactRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const measure = () => {
+      const el = document.querySelector(".inf-wrapper-1") as HTMLElement | null;
+      const dbg = dbgRef.current;
+      if (!el || !dbg) return;
+      const r = el.getBoundingClientRect();
+      const cs = window.getComputedStyle(el);
+      dbg.textContent = `vw:${window.innerWidth} wrap1[top:${Math.round(r.top)} h:${Math.round(r.height)} bottom-css:${cs.bottom} top-css:${cs.top}]`;
+    };
+    measure();
+    window.addEventListener("resize", measure);
+    return () => window.removeEventListener("resize", measure);
+  }, []);
+
   return (
     <>
       <style>{`
@@ -62,6 +80,14 @@ export default function VideoSection({
           .inf-wrapper-2 { border: 4px solid blue !important; }
         }
       `}</style>
+      <div
+        ref={dbgRef}
+        style={{
+          position:"fixed", top:"70px", left:"10px", zIndex:999999,
+          background:"lime", color:"#000", font:"11px monospace", fontWeight:700,
+          padding:"6px 8px", maxWidth:"95vw", wordBreak:"break-all",
+        }}
+      />
       <div style={{ position:"absolute", top:0, left:0, width:"100%", height:"100vh", overflow:"hidden" }}>
         {hasVideo ? (
           <video
