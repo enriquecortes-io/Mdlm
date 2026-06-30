@@ -150,6 +150,7 @@ export default function VideoSection({
         {hasVideo ? (
           <video
             ref={videoRef}
+            crossOrigin="anonymous"
             src={videoUrl}
             muted playsInline autoPlay loop
             style={{ width:"100%", height:"100%", objectFit:"cover", pointerEvents:"none" }}
@@ -163,6 +164,7 @@ export default function VideoSection({
         ) : (
           <video
             ref={videoRef}
+            crossOrigin="anonymous"
             src={fallbackVideo}
             muted playsInline autoPlay loop
             style={{ width:"100%", height:"100%", objectFit:"cover", pointerEvents:"none" }}
