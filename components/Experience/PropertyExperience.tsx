@@ -169,9 +169,9 @@ export default function PropertyExperience({ property, locale }: Props) {
                     ? (property.descripcion as any)[lang] || (property.descripcion as any)["en"] || ""
                     : property.descripcion || "";
                   const firstChar = fullText[0] || "";
-                  const firstSentenceEnd = fullText.search(/[.!?]/);
-                  const firstSentence = firstSentenceEnd > 0 ? fullText.slice(1, firstSentenceEnd+1) : fullText.slice(1, 100);
-                  const rest = fullText.slice(firstSentenceEnd > 0 ? firstSentenceEnd+1 : 100).trim();
+                  const dotIndex = fullText.indexOf(".");
+                  const firstSentence = dotIndex > 0 ? fullText.slice(1, dotIndex).trim() : fullText.slice(1, 120).trim();
+                  const rest = dotIndex > 0 ? fullText.slice(dotIndex + 1).trim() : fullText.slice(120).trim();
                   return (
                     <div>
                       {/* Lead paragraph con drop cap */}
