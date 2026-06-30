@@ -34,24 +34,6 @@ interface VideoSectionProps {
 import { useEffect, useState, useRef as useReactRef } from "react";
 
 
-function getVideoStreamUrl(driveUrl: string): string {
-  if (!driveUrl) return driveUrl;
-  if (driveUrl.startsWith("/api/video-stream")) return driveUrl;
-  
-  const patterns = [
-    /id=([a-zA-Z0-9_-]+)/,
-    /\/d\/([a-zA-Z0-9_-]+)/,
-  ];
-  
-  for (const pattern of patterns) {
-    const match = driveUrl.match(pattern);
-    if (match) {
-      return `/api/video-stream/${match[1]}`;
-    }
-  }
-  return driveUrl;
-}
-
 
 export default function VideoSection({
   videoRef, infographic1Ref, infographic2Ref,
@@ -170,7 +152,7 @@ export default function VideoSection({
           <video
             ref={videoRef}
             crossOrigin="anonymous"
-            src={getVideoStreamUrl(videoUrl)}
+            src={videoUrl}
             muted playsInline autoPlay loop
             style={{ width:"100%", height:"100%", objectFit:"cover", pointerEvents:"none" }}
           />
