@@ -160,8 +160,7 @@ export default function VideoSection({
             alt=""
             style={{ width:"100%", height:"100%", objectFit:"cover", pointerEvents:"none", display:"block" }}
           />
-        ) : (
-        )}
+        )
 
         {/* INFOGRAFICO 1 — izquierda */}
         <div className="inf-wrapper-1" style={{ position:"absolute", inset:0, display:"flex", alignItems:"center", justifyContent:"flex-start", padding:"0 clamp(1.5rem,8vw,8vw)", pointerEvents:"none" }}>
