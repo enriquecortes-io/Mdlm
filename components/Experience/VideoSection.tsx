@@ -39,8 +39,7 @@ export default function VideoSection({
   m2Construidos, m2Parcela, habitaciones, banos, precio, inf2,
 }: VideoSectionProps) {
   const hasVideo = !!videoUrl;
-  const fallbackVideo = "/videos/HeroHeader.webm";
-  const [videoLoaded, setVideoLoaded] = useState(false);
+    const [videoLoaded, setVideoLoaded] = useState(false);
   
   useEffect(() => {
     const observer = new IntersectionObserver((entries) => {
@@ -162,13 +161,6 @@ export default function VideoSection({
             style={{ width:"100%", height:"100%", objectFit:"cover", pointerEvents:"none", display:"block" }}
           />
         ) : (
-          <video
-            ref={videoRef}
-            crossOrigin="anonymous"
-            src={fallbackVideo}
-            muted playsInline autoPlay loop
-            style={{ width:"100%", height:"100%", objectFit:"cover", pointerEvents:"none" }}
-          />
         )}
 
         {/* INFOGRAFICO 1 — izquierda */}
