@@ -40,6 +40,31 @@ export default function VideoSection({
 }: VideoSectionProps) {
   const hasVideo = !!videoUrl;
   const fallbackVideo = "/videos/hero.mp4";
+
+  useEffect(() => {
+    const v = videoRef.current;
+    if (!v) return;
+    v.muted = true; v.defaultMuted = true; v.playsInline = true;
+    v.setAttribute("muted",""); v.setAttribute("playsinline",""); v.setAttribute("webkit-playsinline","");
+    let cancelled = false;
+    const tryPlay = () => { if (!cancelled && v) { const pr = v.play(); if (pr && pr.catch) pr.catch(()=>{}); } };
+    tryPlay();
+    v.addEventListener("loadeddata", tryPlay);
+    v.addEventListener("canplay", tryPlay);
+    const tm = setTimeout(tryPlay, 400);
+    const onGesture = () => tryPlay();
+    window.addEventListener("touchstart", onGesture, { once:true, passive:true });
+    window.addEventListener("pointerdown", onGesture, { once:true });
+    window.addEventListener("scroll", onGesture, { once:true, passive:true });
+    return () => {
+      cancelled = true; clearTimeout(tm);
+      v.removeEventListener("loadeddata", tryPlay);
+      v.removeEventListener("canplay", tryPlay);
+      window.removeEventListener("touchstart", onGesture);
+      window.removeEventListener("pointerdown", onGesture);
+      window.removeEventListener("scroll", onGesture);
+    };
+  }, [videoUrl]);
   // En movil, el inset:0 inline tiene mayor especificidad que cualquier clase CSS
   // (inline style siempre gana). Aplicamos el posicionamiento via JS directamente.
   useEffect(() => {
@@ -103,7 +128,9 @@ export default function VideoSection({
           .inf-wrapper-1 { border: 4px solid red !important; }
           .inf-wrapper-2 { border: 4px solid blue !important; }
         }
-      `}</style>
+      
+          .inf-wrapper-2 { display: none !important; }
+        `}</style>
 
       <div style={{ position:"absolute", top:0, left:0, width:"100%", height:"100vh", overflow:"hidden" }}>
         {hasVideo ? (
