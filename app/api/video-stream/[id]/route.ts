@@ -13,7 +13,11 @@ export async function GET(
     const response = await fetch(driveUrl, {
       headers: {
         "Range": request.headers.get("Range") || "",
-        "User-Agent": "Mozilla/5.0",
+        "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36",
+        "Accept": "video/webm,video/ogg,video/*;q=0.9,application/ogg;q=0.7,*/*;q=0.6",
+        "Accept-Language": "en-US,en;q=0.9",
+        "Referer": "https://drive.google.com/",
+        "Origin": "https://drive.google.com",
       },
     });
     
