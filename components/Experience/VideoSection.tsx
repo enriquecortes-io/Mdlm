@@ -31,7 +31,7 @@ interface VideoSectionProps {
   inf2?: { label: InfText; titulo: InfText; subtitulo: InfText; texto: InfText } | null;
 }
 
-import { useEffect, useRef as useReactRef } from "react";
+import { useEffect, useState, useRef as useReactRef } from "react";
 
 export default function VideoSection({
   videoRef, infographic1Ref, infographic2Ref,
@@ -40,6 +40,20 @@ export default function VideoSection({
 }: VideoSectionProps) {
   const hasVideo = !!videoUrl;
   const fallbackVideo = "/videos/hero.mp4";
+  const [videoLoaded, setVideoLoaded] = useState(false);
+  
+  useEffect(() => {
+    const observer = new IntersectionObserver((entries) => {
+      if (entries[0].isIntersecting) {
+        setVideoLoaded(true);
+        observer.disconnect();
+      }
+    }, { threshold: 0.1 });
+    
+    const container = document.querySelector('[data-video-container]');
+    if (container) observer.observe(container);
+    return () => observer.disconnect();
+  }, []);
 
   useEffect(() => {
     const v = videoRef.current;
