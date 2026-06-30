@@ -39,7 +39,7 @@ export default function VideoSection({
   m2Construidos, m2Parcela, habitaciones, banos, precio, inf2,
 }: VideoSectionProps) {
   const hasVideo = !!videoUrl;
-  const fallbackVideo = "/videos/hero.mp4";
+  const fallbackVideo = "/videos/HeroHeader.webm";
   const [videoLoaded, setVideoLoaded] = useState(false);
   
   useEffect(() => {
