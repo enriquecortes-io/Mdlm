@@ -170,8 +170,8 @@ export default function VideoSection({
             ref={infographic1Ref}
             className="inf-box"
             style={{
-              opacity:0,
-              transform:"translate3d(0px, 120px, 0)",
+              opacity:1,
+              transform:"translate3d(0px, 0px, 0)",
               transition:"none",
               background:"rgba(250,248,244,0.10)",
               backdropFilter:"blur(12px)",
@@ -239,8 +239,8 @@ export default function VideoSection({
             ref={infographic2Ref}
             className="inf-box"
             style={{
-              opacity:0,
-              transform:"translate3d(0px, 120px, 0)",
+              opacity:1,
+              transform:"translate3d(0px, 0px, 0)",
               transition:"none",
               background:"rgba(250,248,244,0.10)",
               backdropFilter:"blur(12px)",
