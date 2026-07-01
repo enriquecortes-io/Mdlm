@@ -95,7 +95,7 @@ export default function Portfolio({ password, role, onEdit }: Props) {
     setStatus("");
   };
 
-  const handleTranslate = async (field: "titulo"|"descripcion") => {
+  const handleTranslate = async (field: "descripcion") => {
     const obj = field === "titulo" ? titulo : descripcion;
     const text = obj[lang];
     if (!text) { setStatus("❌ Escribe el texto primero"); return; }
@@ -342,8 +342,7 @@ export default function Portfolio({ password, role, onEdit }: Props) {
               <input value={titulo[lang]||""}
                 onChange={e=>setTitulo(p=>({...p,[lang]:e.target.value}))}
                 style={{ ...INP, marginBottom:0, flex:1 }}/>
-              <button onClick={()=>handleTranslate("titulo")} disabled={translating}
-                style={{ padding:"10px 16px", background:"#7c3aed", color:"white", border:"none", borderRadius:"6px", fontSize:"13px", cursor:"pointer", whiteSpace:"nowrap" }}>
+              <button style={{ display:"none" }}>
                 {translating?"...":"Traducir →4"}
               </button>
             </div>

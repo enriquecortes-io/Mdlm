@@ -35,7 +35,7 @@ export default function NewProperty({ password }: Props) {
       .replace(/[^a-z0-9\s-]/g,"")
       .trim().replace(/\s+/g,"-");
 
-  const handleTranslate = async (field: "titulo"|"descripcion") => {
+  const handleTranslate = async (field: "descripcion") => {
     if (!form[field]) return;
     setStatus("Traduciendo...");
     setTranslating(true);
@@ -67,7 +67,7 @@ export default function NewProperty({ password }: Props) {
     setStatus("Guardando...");
     try {
       // Si no se ha traducido, usar el texto original en todos los idiomas
-      const tituloFinal = translated.titulo || {
+      const tituloFinal = {
         es: form.titulo, en: form.titulo, fr: form.titulo, ru: form.titulo
       };
       const descFinal = translated.descripcion || {
