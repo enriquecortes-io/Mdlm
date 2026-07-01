@@ -155,7 +155,7 @@ export default function PropertyExperience({ property, locale }: Props) {
                   { label:"Ref.", value: ref || null, mono:true },
                 ].filter(d => d.value).map((d,i,arr) => (
                   <div key={d.label} style={{ flex:"1 1 80px", padding:"0.5rem 1rem 0.5rem 0", borderRight: i < arr.length-1 ? "1px solid rgba(255,255,255,0.07)" : "none", marginRight: i < arr.length-1 ? "1rem" : "0" }}>
-                    <p style={{ fontFamily:"'Montserrat',sans-serif", fontSize:"0.72rem", fontWeight:700, color:"#8a7550", letterSpacing:"0.25em", textTransform:"uppercase", margin:"0 0 0.35rem" }}>{d.label}</p>
+                    <p style={{ fontFamily:"'Montserrat',sans-serif", fontSize:"0.72rem", fontWeight:700, color:"#8a7550", letterSpacing:"0.25em", textTransform:"uppercase", margin:"0 0 1.2rem" }}>{d.label}</p>
                     <p style={{ fontFamily:(d as any).mono ? "'Courier New',monospace" : "'Cormorant Garamond',serif", fontSize:(d as any).mono ? "clamp(0.85rem,1.4vw,1.05rem)" : "clamp(1.3rem,2.4vw,1.9rem)", color:(d as any).gold ? "#a8842f" : "#1A1714", fontWeight:(d as any).mono ? 500 : 500, margin:0, lineHeight:1.1, letterSpacing:(d as any).mono ? "0.1em" : "normal" }}>{String(d.value)}</p>
                   </div>
                 ))}
