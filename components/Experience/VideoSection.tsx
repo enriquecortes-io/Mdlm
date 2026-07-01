@@ -58,7 +58,7 @@ export default function VideoSection({
             ref={infographic1Ref}
             className="inf-box"
             style={{
-              opacity:1,
+              opacity:0,
               transform:"translate3d(0px, 0px, 0)",
               transition:"none",
               background:"transparent",
