@@ -107,8 +107,7 @@ export default function Portfolio({ password, role, onEdit }: Props) {
         body: JSON.stringify({ text, sourceLang: lang, password }),
       });
       const data = await res.json();
-      if (field === "titulo") setTitulo(data.translations);
-      else setDescripcion(data.translations);
+      setDescripcion(data.translations);
       setStatus(`✅ ${field} traducido — cambia de idioma para verlo`);
     } catch { setStatus("❌ Error al traducir"); }
     setTranslating(false);
