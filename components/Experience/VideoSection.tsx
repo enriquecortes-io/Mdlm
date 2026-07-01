@@ -21,6 +21,7 @@ interface VideoSectionProps {
   infographic1Ref: React.RefObject<HTMLDivElement | null>;
   infographic2Ref: React.RefObject<HTMLDivElement | null>;
   videoUrl?: string;
+  imageUrl?: string;
   locale?: string;
   m2Construidos?: number;
   m2Parcela?: number;
@@ -32,7 +33,7 @@ interface VideoSectionProps {
 
 export default function VideoSection({
   videoRef, infographic1Ref, infographic2Ref,
-  videoUrl = "/videos/hero.mp4", locale = "es",
+  videoUrl, imageUrl, locale = "es",
   m2Construidos, m2Parcela, habitaciones, banos, precio, inf2,
 }: VideoSectionProps) {
   return (
@@ -45,12 +46,22 @@ export default function VideoSection({
         }
       `}</style>
       <div style={{ position:"absolute", top:0, left:0, width:"100%", height:"100vh", overflow:"hidden" }}>
-        <video
-          ref={videoRef}
-          src={videoUrl}
-          muted playsInline preload="auto"
-          style={{ width:"100%", height:"100%", objectFit:"cover" }}
-        />
+        {videoUrl ? (
+          <video
+            ref={videoRef}
+            src={videoUrl}
+            muted playsInline preload="auto"
+            style={{ width:"100%", height:"100%", objectFit:"cover" }}
+          />
+        ) : imageUrl ? (
+          <img
+            src={imageUrl}
+            alt=""
+            style={{ width:"100%", height:"100%", objectFit:"cover" }}
+          />
+        ) : (
+          <div style={{ width:"100%", height:"100%", background:"#0a0a0a" }} />
+        )}
 
         {/* INFOGRAFICO 1 — izquierda */}
         <div className="inf-wrapper-1" style={{ position:"absolute", inset:0, display:"flex", alignItems:"center", justifyContent:"flex-start", padding:"0 clamp(1.5rem,8vw,8vw)" }}>
