@@ -79,7 +79,7 @@ export default function VideoSection({
                   <span style={{ color:"rgba(255,255,255,0.45)", fontSize:"clamp(0.4rem,0.9vw,0.55rem)", letterSpacing:"0.3em", textTransform:"uppercase" }}>
                     {({"es":"Construido","en":"Built","fr":"Construit","ru":"Построено"} as Record<string,string>)[locale] || "Built"}
                   </span>
-                  <span style={{ color:"white", fontSize:"clamp(1rem,2vw,1.5rem)", fontWeight:200, fontFamily:"'Montserrat','Helvetica Neue',sans-serif" }}>
+                  <span style={{ color:"white", fontSize:"clamp(1rem,2vw,1.5rem)", fontWeight:400, fontFamily:"'Montserrat','Helvetica Neue',sans-serif" }}>
                     {m2Construidos.toLocaleString()} m²
                   </span>
                 </div>
@@ -89,7 +89,7 @@ export default function VideoSection({
                   <span style={{ color:"rgba(255,255,255,0.45)", fontSize:"clamp(0.4rem,0.9vw,0.55rem)", letterSpacing:"0.3em", textTransform:"uppercase" }}>
                     {({"es":"Parcela","en":"Plot","fr":"Terrain","ru":"Участок"} as Record<string,string>)[locale] || "Plot"}
                   </span>
-                  <span style={{ color:"white", fontSize:"clamp(1rem,2vw,1.5rem)", fontWeight:200, fontFamily:"'Montserrat','Helvetica Neue',sans-serif" }}>
+                  <span style={{ color:"white", fontSize:"clamp(1rem,2vw,1.5rem)", fontWeight:400, fontFamily:"'Montserrat','Helvetica Neue',sans-serif" }}>
                     {m2Parcela.toLocaleString()} m²
                   </span>
                 </div>
@@ -99,7 +99,7 @@ export default function VideoSection({
                   <span style={{ color:"rgba(255,255,255,0.45)", fontSize:"clamp(0.4rem,0.9vw,0.55rem)", letterSpacing:"0.3em", textTransform:"uppercase" }}>
                     {({"es":"Dorm / Baños","en":"Bed / Bath","fr":"Ch / SDB","ru":"Сп / Ван"} as Record<string,string>)[locale] || "Bed / Bath"}
                   </span>
-                  <span style={{ color:"white", fontSize:"clamp(1rem,2vw,1.5rem)", fontWeight:200, fontFamily:"'Montserrat','Helvetica Neue',sans-serif" }}>
+                  <span style={{ color:"white", fontSize:"clamp(1rem,2vw,1.5rem)", fontWeight:400, fontFamily:"'Montserrat','Helvetica Neue',sans-serif" }}>
                     {habitaciones} / {banos}
                   </span>
                 </div>
@@ -109,7 +109,7 @@ export default function VideoSection({
                   <span style={{ color:"rgba(255,255,255,0.45)", fontSize:"clamp(0.4rem,0.9vw,0.55rem)", letterSpacing:"0.3em", textTransform:"uppercase" }}>
                     {({"es":"Precio","en":"Price","fr":"Prix","ru":"Цена"} as Record<string,string>)[locale] || "Price"}
                   </span>
-                  <span style={{ color:"#c9a96e", fontSize:"clamp(1rem,2.2vw,1.6rem)", fontWeight:200, fontFamily:"'Montserrat','Helvetica Neue',sans-serif" }}>
+                  <span style={{ color:"#c9a96e", fontSize:"clamp(1rem,2.2vw,1.6rem)", fontWeight:400, fontFamily:"'Montserrat','Helvetica Neue',sans-serif" }}>
                     €{(precio/1000000).toFixed(1)}M
                   </span>
                 </div>
@@ -137,7 +137,7 @@ export default function VideoSection({
             <span style={{ color:"rgba(255,255,255,0.55)", textTransform:"uppercase", letterSpacing:"0.45em", fontSize:"clamp(0.4rem,1vw,0.55rem)", display:"block", marginBottom:"1rem", fontStyle:"italic" }}>
               {getText(inf2?.label, locale)}
             </span>
-            <h2 style={{ fontFamily:"Georgia,serif", color:"white", fontSize:"clamp(1.6rem,3.5vw,4rem)", fontWeight:300, lineHeight:1.15, margin:"0 0 0.8rem" }}>
+            <h2 style={{ fontFamily:"Georgia,serif", color:"white", fontSize:"clamp(1.6rem,3.5vw,4rem)", fontWeight:500, lineHeight:1.15, margin:"0 0 0.8rem" }}>
               {getText(inf2?.titulo, locale)}<br />
               <span style={{ color:"rgba(255,255,255,0.6)", fontSize:"0.75em", fontFamily:"sans-serif", fontWeight:100 }}>
                 {getText(inf2?.subtitulo, locale)}
