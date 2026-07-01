@@ -96,7 +96,7 @@ export default function Portfolio({ password, role, onEdit }: Props) {
   };
 
   const handleTranslate = async (field: "descripcion") => {
-    const obj = field === "titulo" ? titulo : descripcion;
+    const obj = descripcion;
     const text = obj[lang];
     if (!text) { setStatus("❌ Escribe el texto primero"); return; }
     setTranslating(true);
