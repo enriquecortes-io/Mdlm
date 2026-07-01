@@ -125,12 +125,12 @@ export default async function LocaleLayout({
       <body style={{ background: "#FAFAF7", margin: 0 }}>
         {/* Microsoft Clarity */}
         <Script
-          strategy="lazyOnload"
+          strategy="afterInteractive"
           src="https://www.googletagmanager.com/gtag/js?id=G-R597Y3M8HZ"
         />
         <Script
           id="ga4-init"
-          strategy="lazyOnload"
+          strategy="afterInteractive"
           dangerouslySetInnerHTML={{ __html: `window.dataLayer = window.dataLayer || []; function gtag(){dataLayer.push(arguments);} gtag('js', new Date()); gtag('config', 'G-R597Y3M8HZ');` }}
         />
         <Script
