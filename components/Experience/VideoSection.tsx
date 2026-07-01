@@ -75,7 +75,7 @@ export default function VideoSection({
             {/* Filas */}
             <div style={{ display:"flex", flexDirection:"column", gap:"0.9rem" }}>
               {m2Construidos && (
-                <div style={{ display:"flex", justifyContent:"space-between", alignItems:"baseline", borderBottom:"1px solid rgba(255,255,255,0.1)", paddingBottom:"0.6rem" }}>
+                <div style={{ display:"flex", flexDirection:"column", gap:"0.8rem", borderBottom:"1px solid rgba(255,255,255,0.1)", paddingBottom:"0.6rem" }}>
                   <span style={{ color:"rgba(255,255,255,0.45)", fontSize:"clamp(0.4rem,0.9vw,0.55rem)", letterSpacing:"0.3em", textTransform:"uppercase" }}>
                     {({"es":"Construido","en":"Built","fr":"Construit","ru":"Построено"} as Record<string,string>)[locale] || "Built"}
                   </span>
@@ -85,7 +85,7 @@ export default function VideoSection({
                 </div>
               )}
               {m2Parcela && m2Parcela > 0 && (
-                <div style={{ display:"flex", justifyContent:"space-between", alignItems:"baseline", borderBottom:"1px solid rgba(255,255,255,0.1)", paddingBottom:"0.6rem" }}>
+                <div style={{ display:"flex", flexDirection:"column", gap:"0.8rem", borderBottom:"1px solid rgba(255,255,255,0.1)", paddingBottom:"0.6rem" }}>
                   <span style={{ color:"rgba(255,255,255,0.45)", fontSize:"clamp(0.4rem,0.9vw,0.55rem)", letterSpacing:"0.3em", textTransform:"uppercase" }}>
                     {({"es":"Parcela","en":"Plot","fr":"Terrain","ru":"Участок"} as Record<string,string>)[locale] || "Plot"}
                   </span>
@@ -95,7 +95,7 @@ export default function VideoSection({
                 </div>
               )}
               {habitaciones && (
-                <div style={{ display:"flex", justifyContent:"space-between", alignItems:"baseline", borderBottom:"1px solid rgba(255,255,255,0.1)", paddingBottom:"0.6rem" }}>
+                <div style={{ display:"flex", flexDirection:"column", gap:"0.8rem", borderBottom:"1px solid rgba(255,255,255,0.1)", paddingBottom:"0.6rem" }}>
                   <span style={{ color:"rgba(255,255,255,0.45)", fontSize:"clamp(0.4rem,0.9vw,0.55rem)", letterSpacing:"0.3em", textTransform:"uppercase" }}>
                     {({"es":"Dorm / Baños","en":"Bed / Bath","fr":"Ch / SDB","ru":"Сп / Ван"} as Record<string,string>)[locale] || "Bed / Bath"}
                   </span>
