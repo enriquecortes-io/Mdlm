@@ -43,8 +43,10 @@ export default function PropertyExperience({ property, locale }: Props) {
       gallery.style.top = `${descTop + descHeight}px`;
     };
     updateGalleryPos();
-    window.addEventListener("resize", updateGalleryPos);
-    return () => window.removeEventListener("resize", updateGalleryPos);
+    let rafId = 0;
+    const onResize = () => { cancelAnimationFrame(rafId); rafId = requestAnimationFrame(updateGalleryPos); };
+    window.addEventListener("resize", onResize);
+    return () => { window.removeEventListener("resize", onResize); cancelAnimationFrame(rafId); };
   }, []);
   const infographic1Ref = useRef<HTMLDivElement>(null);
   const infographic2Ref = useRef<HTMLDivElement>(null);

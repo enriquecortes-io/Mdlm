@@ -26,9 +26,12 @@ export default function PropertiesExperience({ properties, locale, filters, isMo
   const rafRef = useRef<number>(0);
 
   // Click normal de ratón
+  const audioCtxRef = useRef<AudioContext | null>(null);
   const playClick = () => {
     try {
-      const ctx = new (window.AudioContext || (window as any).webkitAudioContext)();
+      if (!audioCtxRef.current) audioCtxRef.current = new (window.AudioContext || (window as any).webkitAudioContext)();
+      const ctx = audioCtxRef.current;
+      if (ctx.state === "suspended") ctx.resume();
       const now = ctx.currentTime;
       const len = ctx.sampleRate * 0.008;
       const buf = ctx.createBuffer(1, len, ctx.sampleRate);
