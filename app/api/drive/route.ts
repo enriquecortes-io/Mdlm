@@ -36,7 +36,7 @@ export async function GET(req: NextRequest) {
     const auth = getAuth();
     const drive = google.drive({ version: "v3", auth });
 
-    const meta = await drive.files.get({ fileId: id, fields: "mimeType,size" });
+    const meta = await drive.files.get({ fileId: id, fields: "mimeType,size", supportsAllDrives: true });
     const mimeType = meta.data.mimeType || "application/octet-stream";
     const fileSize = parseInt(meta.data.size || "0");
 
@@ -56,7 +56,7 @@ export async function GET(req: NextRequest) {
       const chunkSize = end - start + 1;
 
       const response = await drive.files.get(
-        { fileId: id, alt: "media" },
+        { fileId: id, alt: "media", supportsAllDrives: true },
         { responseType: "stream", headers: { Range: `bytes=${start}-${end}` } }
       );
 
@@ -103,7 +103,7 @@ export async function GET(req: NextRequest) {
 
     // Otros archivos (no imagen, no video): se sirven tal cual
     const response = await drive.files.get(
-      { fileId: id, alt: "media" },
+      { fileId: id, alt: "media", supportsAllDrives: true },
       { responseType: "stream" }
     );
 
