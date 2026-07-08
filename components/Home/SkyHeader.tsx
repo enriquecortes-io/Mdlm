@@ -190,41 +190,42 @@ export default function SkyHeader({ locale }: Props) {
            </p>
          </div>
 
-         {/* CTA */}
-         <div style={{ marginTop:"2.5rem" }}>
-           <button
-             onClick={() => {
-               const el = document.getElementById("masonry-section");
-               if (el) el.scrollIntoView({ behavior: "smooth" });
-             }}
-             style={{
-               fontFamily:"'Montserrat',sans-serif",
-               fontSize:"clamp(0.6rem,1.2vw,0.85rem)",
-               fontWeight:500,
-               letterSpacing:"0.2em",
-               textTransform:"uppercase",
-               color:"white",
-               background:"transparent",
-               border:"1px solid rgba(255,255,255,0.6)",
-               padding:"14px 36px",
-               borderRadius:"0",
-               cursor:"pointer",
-               transition:"all 0.3s ease",
-             }}
-             onMouseEnter={e => {
-               (e.currentTarget as HTMLButtonElement).style.background = "white";
-               (e.currentTarget as HTMLButtonElement).style.color = "#0a0a0f";
-             }}
-             onMouseLeave={e => {
-               (e.currentTarget as HTMLButtonElement).style.background = "transparent";
-               (e.currentTarget as HTMLButtonElement).style.color = "white";
-             }}
-           >
-             Ver propiedades
-           </button>
-         </div>
-
        </div>
+     </div>
+
+     {/* CTA fijo abajo centro */}
+     <div style={{
+       position:"absolute", bottom:"48px", left:0, right:0,
+       zIndex:20, display:"flex", justifyContent:"center",
+     }}>
+       <button
+         onClick={() => {
+           window.dispatchEvent(new CustomEvent("scrollphase", { detail: "masonry" }));
+         }}
+         style={{
+           fontFamily:"'Montserrat',sans-serif",
+           fontSize:"clamp(0.6rem,1.2vw,0.85rem)",
+           fontWeight:500,
+           letterSpacing:"0.2em",
+           textTransform:"uppercase",
+           color:"white",
+           background:"transparent",
+           border:"1px solid rgba(255,255,255,0.6)",
+           padding:"14px 36px",
+           cursor:"pointer",
+           transition:"all 0.3s ease",
+         }}
+         onMouseEnter={e => {
+           (e.currentTarget as HTMLButtonElement).style.background = "white";
+           (e.currentTarget as HTMLButtonElement).style.color = "#0a0a0f";
+         }}
+         onMouseLeave={e => {
+           (e.currentTarget as HTMLButtonElement).style.background = "transparent";
+           (e.currentTarget as HTMLButtonElement).style.color = "white";
+         }}
+       >
+         Ver propiedades
+       </button>
      </div>
 
      {/* Barras de progreso */}
