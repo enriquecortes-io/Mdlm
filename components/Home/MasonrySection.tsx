@@ -540,7 +540,7 @@ export default function MasonrySection({ locale = "es" }: { locale?: string }) {
                     }}
                   >
                     {/* Imagen — ocupa el espacio sobrante */}
-                    <div style={{ position:"relative", overflow:"hidden", flex:"1 1 auto", minHeight:0 }}>
+                    <div style={{ position:"relative", overflow:"hidden", flex:"1 1 auto", minHeight:0, maxHeight:"60%" }}>
                       {img ? (
                         <img src={img} alt={title} style={{ position:"absolute", inset:0, width:"100%", height:"100%", objectFit:"cover", display:"block" }}/>
                       ) : (
