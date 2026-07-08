@@ -105,6 +105,7 @@ export function useHomeScroll({ headerRef, manifestoRef, filtersRef, carouselRef
     };
     rafId = requestAnimationFrame(tick);
 
+    (window as any).__goToPhase = (phase: Phase) => { if (phase !== 'header') targetHeader = 1; setPhase(phase); };
     (window as any).__advancePanel = (next: number) => {
       targetProgressRef.current = Math.max(0, Math.min(totalPanels - 1, next));
     };

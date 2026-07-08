@@ -195,12 +195,12 @@ export default function SkyHeader({ locale }: Props) {
 
      {/* CTA fijo abajo centro */}
      <div style={{
-       position:"absolute", bottom:"48px", left:0, right:0,
+       position:"absolute", bottom:"80px", left:0, right:0,
        zIndex:20, display:"flex", justifyContent:"center",
      }}>
        <button
          onClick={() => {
-           window.dispatchEvent(new CustomEvent("scrollphase", { detail: "masonry" }));
+           if ((window as any).__goToPhase) (window as any).__goToPhase("masonry");
          }}
          style={{
            fontFamily:"'Montserrat',sans-serif",
