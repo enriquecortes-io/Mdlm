@@ -36,7 +36,7 @@ export default function HomeExperience({ locale }: Props) {
       <Manifesto ref={manifestoRef} locale={locale} />
 
       {/* Masonry */}
-      <div ref={masonryRef} style={{
+      <div id="masonry-section" ref={masonryRef} style={{
         position:"absolute", inset:0, zIndex:25,
         opacity:0, pointerEvents:"none",
       }}>
