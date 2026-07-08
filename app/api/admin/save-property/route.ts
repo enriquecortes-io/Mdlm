@@ -146,7 +146,6 @@ export async function POST(req: NextRequest) {
         delete property[f];
       }
     }
-    }
 
     // Normalizar titulo y descripcion como objetos multilingüe
     const sourceLang = property.sourceLang || "es";
