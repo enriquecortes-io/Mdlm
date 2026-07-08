@@ -195,7 +195,7 @@ export default function SkyHeader({ locale }: Props) {
 
      {/* CTA fijo abajo centro */}
      <div style={{
-       position:"absolute", bottom:"80px", left:0, right:0,
+       position:"absolute", bottom:"120px", left:0, right:0,
        zIndex:20, display:"flex", justifyContent:"center",
      }}>
        <button
