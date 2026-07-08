@@ -146,20 +146,6 @@ export async function POST(req: NextRequest) {
         delete property[f];
       }
     }
-
-    // Generar SEO descriptions automáticamente si hay descripción
-    const hasDescription = property.descripcion &&
-      (typeof property.descripcion === "string"
-        ? property.descripcion.length > 50
-        : Object.values(property.descripcion).some((v: any) => v?.length > 50));
-
-    if (hasDescription && !property.seo_description?.es) {
-      // SEO generation triggered
-      const seoDesc = await generateSeoDescriptions(property);
-      if (Object.keys(seoDesc).length > 0) {
-        property.seo_description = seoDesc;
-        // SEO descriptions ready
-      }
     }
 
     // Normalizar titulo y descripcion como objetos multilingüe
