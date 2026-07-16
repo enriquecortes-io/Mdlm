@@ -63,7 +63,8 @@
         "word": "MARBELLA",
         "phrase": "donde vivir es el verdadero lujo"
       }
-    ]
+    ],
+    "cta": "Ver propiedades"
   },
   "filters": {
     "zona": {
@@ -129,8 +130,7 @@
     "backToSearch": "← Volver a la Búsqueda"
   },
   "property": {
-    "scroll": "SCROLL",
-    "cta": "Ver propiedades"
+    "scroll": "SCROLL"
   },
   "manifesto": {
     "title": "The Edit",
