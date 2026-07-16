@@ -468,7 +468,7 @@ export default function MasonrySection({ locale = "es" }: { locale?: string }) {
                       onMouseEnter={e=>{(e.currentTarget as HTMLElement).style.background=BG_SOFT; (e.currentTarget as HTMLElement).style.color=ACCENT;}}
                       onMouseLeave={e=>{(e.currentTarget as HTMLElement).style.background=filters[f.id]===opt?BG_SOFT:"none"; (e.currentTarget as HTMLElement).style.color=filters[f.id]===opt?ACCENT:TEXT2;}}
                       >
-                        {f.id === "precio" ? PRICE_LABELS[opt] : f.id === "habitaciones" ? `${opt} hab.` : opt}
+                        {f.id === "precio" ? PRICE_LABELS[opt] : f.id === "habitaciones" ? `${opt} hab.` : f.id === "tipo" ? getTipoLabel(opt, locale) : opt.charAt(0).toUpperCase() + opt.slice(1)}
                       </button>
                     ))}
                   </div>
