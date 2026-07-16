@@ -129,7 +129,8 @@
     "backToSearch": "← Volver a la Búsqueda"
   },
   "property": {
-    "scroll": "SCROLL"
+    "scroll": "SCROLL",
+    "cta": "Ver propiedades"
   },
   "manifesto": {
     "title": "The Edit",

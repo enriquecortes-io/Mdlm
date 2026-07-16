@@ -224,7 +224,7 @@ export default function SkyHeader({ locale }: Props) {
            (e.currentTarget as HTMLButtonElement).style.color = "white";
          }}
        >
-         Ver propiedades
+         {(t.header as any).cta || "Ver propiedades"}
        </button>
      </div>
 
