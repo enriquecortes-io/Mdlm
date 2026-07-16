@@ -56,6 +56,18 @@ function getDesc(p: Property, locale: string) {
     : p.descripcion || "";
   return d.match(/^[^.!?]+[.!?]/)?.[0] || "";
 }
+const TIPO_LABELS: Record<string, Record<string,string>> = {
+  es: { villa:"Villa", apartment:"Apartamento", townhouse:"Adosado", plot:"Parcela" },
+  en: { villa:"Villa", apartment:"Apartment", townhouse:"Townhouse", plot:"Plot" },
+  fr: { villa:"Villa", apartment:"Appartement", townhouse:"Maison de Ville", plot:"Terrain" },
+  ru: { villa:"Вилла", apartment:"Апартаменты", townhouse:"Таунхаус", plot:"Участок" },
+};
+
+function getTipoLabel(tipo: string | undefined, locale: string): string {
+  if (!tipo) return "";
+  return TIPO_LABELS[locale]?.[tipo] || TIPO_LABELS.en?.[tipo] || tipo.toUpperCase();
+}
+
 function matchPrice(precio: number, filter: string) {
   if (filter === "500k-1m") return precio >= 500000 && precio < 1000000;
   if (filter === "1m-2m")   return precio >= 1000000 && precio < 2000000;
@@ -553,7 +565,7 @@ export default function MasonrySection({ locale = "es" }: { locale?: string }) {
                           fontFamily:"'Montserrat',sans-serif", fontSize:"0.5rem",
                           letterSpacing:"0.2em", textTransform:"uppercase",
                           color:"#FAF8F4", fontWeight:500,
-                        }}>{p.tipo}</div>
+                        }}>{getTipoLabel(p.tipo, locale)}</div>
                       )}
                     </div>
 
