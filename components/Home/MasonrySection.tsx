@@ -20,12 +20,19 @@ interface Property {
   zona?: string;
 }
 
+const FILTERS_LABELS: Record<string, Record<string,string>> = {
+  es: { zona:"Zona", ubicacion:"Ubicación", tipo:"Tipo", habitaciones:"Hab.", precio:"Precio" },
+  en: { zona:"Zone", ubicacion:"Location",  tipo:"Type", habitaciones:"Bed.", precio:"Price"  },
+  fr: { zona:"Zone", ubicacion:"Lieu",      tipo:"Type", habitaciones:"Ch.",  precio:"Prix"   },
+  ru: { zona:"Зона", ubicacion:"Локация",   tipo:"Тип",  habitaciones:"Сп.",  precio:"Цена"   },
+};
+
 const FILTERS_DEF = [
-  { id:"zona",        label:"Zona",        options:["marbella","estepona","mijas","benahavis","sotogrande"] },
-  { id:"ubicacion",   label:"Ubicación",   options:["golden mile","nueva andalucia","puerto banus","sierra blanca","la zagaleta","los monteros","el madroñal"] },
-  { id:"tipo",        label:"Tipo",        options:["villa","apartment","penthouse","townhouse","plot"] },
-  { id:"habitaciones",label:"Hab.",        options:["2","3","4","5","6+"] },
-  { id:"precio",      label:"Precio",      options:["500k-1m","1m-2m","2m-5m","5m+"] },
+  { id:"zona",        options:["marbella","estepona","mijas","benahavis","sotogrande"] },
+  { id:"ubicacion",   options:["golden mile","nueva andalucia","puerto banus","sierra blanca","la zagaleta","los monteros","el madroñal"] },
+  { id:"tipo",        options:["villa","apartment","penthouse","townhouse","plot"] },
+  { id:"habitaciones",options:["2","3","4","5","6+"] },
+  { id:"precio",      options:["500k-1m","1m-2m","2m-5m","5m+"] },
 ];
 
 const PRICE_LABELS: Record<string,string> = { "500k-1m":"500K–1M", "1m-2m":"1M–2M", "2m-5m":"2M–5M", "5m+":"5M+" };
@@ -364,7 +371,7 @@ export default function MasonrySection({ locale = "es" }: { locale?: string }) {
 
   const getFilterLabel = (f: typeof FILTERS_DEF[0]) => {
     const v = filters[f.id];
-    if (!v) return f.label;
+    if (!v) return (FILTERS_LABELS[locale] || FILTERS_LABELS.es)[f.id] || f.id;
     if (f.id === "precio") return PRICE_LABELS[v] || v;
     if (f.id === "habitaciones") return `${HAB_LABELS[v] || v} Hab`;
     return v.charAt(0).toUpperCase() + v.slice(1);
