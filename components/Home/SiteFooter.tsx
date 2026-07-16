@@ -133,6 +133,7 @@ export default function SiteFooter({ locale = "es" }: Props) {
           <span style={{ fontSize: "0.6rem", letterSpacing: "0.2em", textTransform: "uppercase", color: ACCENT, fontWeight: 600 }}>{t.contacto}</span>
           <a href="mailto:info@theeditmarbella.com" style={{ fontSize: "0.7rem", color: MUTED, textDecoration: "none" }}>info@theeditmarbella.com</a>
           <a href="tel:+34610589716" style={{ fontSize: "0.7rem", color: MUTED, textDecoration: "none" }}>+34 610 589 716</a>
+          <span style={{ fontSize: "0.7rem", color: MUTED, lineHeight: 1.6 }}>Urb. La Alzambra, Centro de Negocios Vasari<br/>Marbella, Málaga<br/>España</span>
         </div>
 
         <div style={{ display: "flex", flexDirection: "column", gap: "0.6rem", minWidth: "140px" }}>
