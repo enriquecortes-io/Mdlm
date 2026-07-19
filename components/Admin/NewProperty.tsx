@@ -87,6 +87,8 @@ export default function NewProperty({ password }: Props) {
         banos: parseInt(form.banos)||0,
         m2_construidos: parseInt(form.m2Construidos)||0,
         m2_parcela: form.tieneJardin ? (parseInt(form.m2Parcela)||0) : 0,
+        m2_terraza: parseInt(form.m2Terraza)||0,
+        plazas_parking: parseInt(form.plazasParking)||0,
         ubicacion: form.ubicacion,
         video_url: convertGDriveUrl(form.videoUrl),
         galeria_urls: form.galeriaUrls.split("\n").map(s=>convertGDriveUrl(s.trim())).filter(Boolean),
@@ -178,7 +180,19 @@ export default function NewProperty({ password }: Props) {
         <input value={form.slug} onChange={e=>setForm(p=>({...p,slug:e.target.value}))}
           placeholder="villa-annabel" style={F}/>
 
-        {/* Descripción */}
+        {/* M² Terraza y Parking */}
+          <div style={{ display:"grid", gridTemplateColumns:"1fr 1fr", gap:"12px", marginBottom:"16px" }}>
+            <div>
+              <label style={L}>M² Terraza</label>
+              <input type="number" value={form.m2Terraza} onChange={e=>setForm(p=>({...p,m2Terraza:e.target.value}))} style={INP} placeholder="0"/>
+            </div>
+            <div>
+              <label style={L}>Plazas de Parking</label>
+              <input type="number" value={form.plazasParking} onChange={e=>setForm(p=>({...p,plazasParking:e.target.value}))} style={INP} placeholder="0"/>
+            </div>
+          </div>
+
+          {/* Descripción */}
         <label style={L}>Descripción</label>
         <div style={{ display:"flex", gap:"8px", marginBottom:"8px" }}>
           <textarea value={form.descripcion} onChange={e=>setForm(p=>({...p,descripcion:e.target.value}))}

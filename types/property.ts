@@ -22,6 +22,8 @@ export interface Property {
   banos: number;
   m2_construidos: number;
   m2_parcela: number;
+  m2_terraza?: number;
+  plazas_parking?: number;
   ubicacion: string;
   descripcion: { es: string; en: string; fr: string; ru: string };
   video_url: string;

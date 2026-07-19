@@ -10,7 +10,7 @@ function slugify(s: string): string {
 
 interface Property {
   id: string; slug: string; titulo: any; descripcion: any; precio: number;
-  habitaciones: number; banos: number; m2_construidos: number; m2_parcela: number;
+  habitaciones: number; banos: number; m2_construidos: number; m2_parcela: number; m2_terraza?: number; plazas_parking?: number;
   ubicacion: string; tipo: string; zona: string;
   activa: boolean; destacada: boolean; video_url: string; galeria_urls: string[];
   referencia?: string;
@@ -74,7 +74,7 @@ export default function Portfolio({ password, role, onEdit }: Props) {
       slug: p.slug,
       referencia: p.referencia,
       precio: p.precio, habitaciones: p.habitaciones, banos: p.banos,
-      m2_construidos: p.m2_construidos, m2_parcela: p.m2_parcela,
+      m2_construidos: p.m2_construidos, m2_parcela: p.m2_parcela, m2_terraza: p.m2_terraza||0, plazas_parking: p.plazas_parking||0,
       ubicacion: p.ubicacion, zona: p.zona, tipo: p.tipo,
       video_url: p.video_url, galeria_urls: (p.galeria_urls||[]).join("\n"),
       activa: p.activa, destacada: p.destacada,
@@ -423,6 +423,8 @@ export default function Portfolio({ password, role, onEdit }: Props) {
                 {label:"Baños", field:"banos", type:"number"},
                 {label:"M² Construidos", field:"m2_construidos", type:"number"},
                 {label:"M² Parcela", field:"m2_parcela", type:"number"},
+                {label:"M² Terraza", field:"m2_terraza", type:"number"},
+                {label:"Plazas Parking", field:"plazas_parking", type:"number"},
                 {label:"Ubicación", field:"ubicacion", type:"text"},
               ].map(({label,field,type})=>(
                 <div key={field}>

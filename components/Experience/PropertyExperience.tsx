@@ -101,8 +101,10 @@ export default function PropertyExperience({ property, locale }: Props) {
           imageUrl={firstImageUrl}
           m2Construidos={property.m2_construidos}
           m2Parcela={property.m2_parcela}
+          m2Terraza={property.m2_terraza}
           habitaciones={property.habitaciones}
           banos={property.banos}
+          plazasParking={property.plazas_parking}
           precio={property.precio}
           inf2={inf2}
           locale={urlLocale}
@@ -152,8 +154,10 @@ export default function PropertyExperience({ property, locale }: Props) {
                 {[
                   { label:"Construido", value: property.m2_construidos ? `${property.m2_construidos} m²` : null },
                   { label:"Parcela", value: property.m2_parcela ? `${property.m2_parcela} m²` : null },
+                  { label:"Terraza", value: property.m2_terraza ? `${property.m2_terraza} m²` : null },
                   { label:"Hab.", value: property.habitaciones || null },
                   { label:"Baños", value: property.banos || null },
+                  { label:"Parking", value: property.plazas_parking || null },
 
                   { label:"Ref.", value: ref || null, mono:true },
                 ].filter(d => d.value).map((d,i,arr) => (
