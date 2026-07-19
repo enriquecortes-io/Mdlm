@@ -17,7 +17,7 @@ export default function NewProperty({ password }: Props) {
     slug:"", sourceLang:"es", tipo:"", zona:"",
     titulo:"", descripcion:"",
     precio:"", habitaciones:"", banos:"",
-    m2Construidos:"", m2Parcela:"", tieneJardin:false,
+    m2Construidos:"", m2Parcela:"", m2Terraza:"", plazasParking:"", tieneJardin:false,
     ubicacion:"", videoUrl:"", galeriaUrls:"",
     destacada:false, activa:false,
     // Ubicación detallada
