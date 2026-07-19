@@ -25,6 +25,8 @@ interface VideoSectionProps {
   locale?: string;
   m2Construidos?: number;
   m2Parcela?: number;
+  m2Terraza?: number;
+  plazasParking?: number;
   habitaciones?: number;
   banos?: number;
   precio?: number;
@@ -34,7 +36,7 @@ interface VideoSectionProps {
 export default function VideoSection({
   videoRef, infographic1Ref, infographic2Ref,
   videoUrl, imageUrl, locale = "es",
-  m2Construidos, m2Parcela, habitaciones, banos, precio, inf2,
+  m2Construidos, m2Parcela, m2Terraza, habitaciones, banos, plazasParking, precio, inf2,
 }: VideoSectionProps) {
   return (
     <>
