@@ -248,7 +248,8 @@ export default function Portfolio({ password, role, onEdit }: Props) {
         <div style={{ textAlign:"center", padding:"60px", color:"#4A4540" }}>No hay propiedades</div>
       ) : (
         <div style={{ background:"white", borderRadius:"8px", boxShadow:"0 1px 4px rgba(26,23,20,0.06)", overflow:"hidden" }}>
-          <table style={{ width:"100%", borderCollapse:"collapse" }}>
+          <div style={{ overflowX:"auto", WebkitOverflowScrolling:"touch" }}>
+          <table style={{ width:"100%", borderCollapse:"collapse", minWidth:"900px" }}>
             <thead>
               <tr style={{ borderBottom:"2px solid #f3f4f6" }}>
                 <th style={{ padding:"12px 16px", textAlign:"left", fontSize:"11px", fontWeight:700, color:"#4A4540", textTransform:"uppercase", letterSpacing:"0.06em" }}>Ref</th>
@@ -308,6 +309,7 @@ export default function Portfolio({ password, role, onEdit }: Props) {
               })}
             </tbody>
           </table>
+          </div>
         </div>
       )}
 
