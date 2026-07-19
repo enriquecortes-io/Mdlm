@@ -74,9 +74,12 @@ export default function VideoSection({
               opacity:0,
               transform:"translate3d(0px, 0px, 0)",
               transition:"none",
-              background:"transparent",
-              border:"none",
-              padding:"clamp(1rem,2vw,2rem) 0",
+              background:"rgba(0,0,0,0.05)",
+              backdropFilter:"blur(12px)",
+              WebkitBackdropFilter:"blur(12px)",
+              border:"1px solid rgba(255,255,255,0.04)",
+              borderRadius:"2px",
+              padding:"clamp(1rem,2vw,2rem) clamp(1rem,2vw,1.5rem)",
               maxWidth:"clamp(180px,32vw,32rem)",
             }}
           >
