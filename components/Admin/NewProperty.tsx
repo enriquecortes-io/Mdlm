@@ -184,11 +184,11 @@ export default function NewProperty({ password }: Props) {
           <div style={{ display:"grid", gridTemplateColumns:"1fr 1fr", gap:"12px", marginBottom:"16px" }}>
             <div>
               <label style={L}>M² Terraza</label>
-              <input type="number" value={form.m2Terraza} onChange={e=>setForm(p=>({...p,m2Terraza:e.target.value}))} style={INP} placeholder="0"/>
+              <input type="number" value={form.m2Terraza} onChange={e=>setForm(p=>({...p,m2Terraza:e.target.value}))} style={F} placeholder="0"/>
             </div>
             <div>
               <label style={L}>Plazas de Parking</label>
-              <input type="number" value={form.plazasParking} onChange={e=>setForm(p=>({...p,plazasParking:e.target.value}))} style={INP} placeholder="0"/>
+              <input type="number" value={form.plazasParking} onChange={e=>setForm(p=>({...p,plazasParking:e.target.value}))} style={F} placeholder="0"/>
             </div>
           </div>
 
