@@ -346,6 +346,12 @@ export default function Portfolio({ password, role, onEdit }: Props) {
               </button>
             </div>
 
+            {/* Referencia */}
+            <label style={L}>Referencia (ej. VILLA-123)</label>
+            <input value={editFields.referencia||""}
+              onChange={e=>setEditFields((f:any)=>({...f, referencia: e.target.value}))}
+              style={INP} placeholder="VILLA-123"/>
+
             {/* Slug (URL) — autogenerado del título, editable */}
             <label style={L}>Slug (URL pública)</label>
             <input value={editFields.slug||""}
