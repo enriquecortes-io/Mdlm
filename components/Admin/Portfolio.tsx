@@ -305,6 +305,8 @@ export default function Portfolio({ password, role, onEdit }: Props) {
                           style={{ padding:"6px 10px", background:"#F2EDE4", border:"none", borderRadius:"6px", fontSize:"12px", cursor:"pointer", color:"#1A1714", textDecoration:"none" }}>Ver →</a>
                         <button onClick={()=>handleEdit(p)}
                           style={{ padding:"6px 10px", background:"#eff6ff", border:"none", borderRadius:"6px", fontSize:"12px", cursor:"pointer", color:"#1d4ed8" }}>Editar</button>
+                        <button onClick={()=>setDeleteModal({slug:p.slug, nombre:typeof p.titulo==="object"?(p.titulo as any).es||p.slug:p.slug})}
+                          style={{ padding:"6px 10px", background:"#fef2f2", border:"none", borderRadius:"6px", fontSize:"12px", cursor:"pointer", color:"#991b1b" }}>✕</button>
 
                       </div>
                     </td>
