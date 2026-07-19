@@ -115,6 +115,10 @@ export default function Portfolio({ password, role, onEdit }: Props) {
 
   const handleSaveEdit = async () => {
     if (!editing) return;
+    // Validación básica del título
+    if (!titulo.es || titulo.es.trim().length < 2) {
+      setStatus("❌ El título en español no puede estar vacío"); return;
+    }
     setStatus("Guardando...");
     try {
       const property = {
