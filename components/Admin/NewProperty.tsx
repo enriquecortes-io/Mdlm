@@ -13,8 +13,8 @@ export default function NewProperty({ password }: Props) {
   const [translating, setTranslating] = useState(false);
   const [translated, setTranslated] = useState<Record<string,Record<string,string>>>({});
 
-  const [form, setForm] = useState({
   const [descTab, setDescTab] = useState<"texto"|"html">("texto");
+  const [form, setForm] = useState({
     slug:"", sourceLang:"es", tipo:"", zona:"",
     titulo:"", descripcion:"",
     precio:"", habitaciones:"", banos:"",
