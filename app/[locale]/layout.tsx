@@ -1,7 +1,7 @@
 import ContactHub from "@/components/ContactHub";
 import { SpeedInsights } from "@vercel/speed-insights/next";
 import { Analytics } from "@vercel/analytics/next";
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import SkyBackground from "@/components/SkyBackground";
 import CookieBanner from "@/components/CookieBanner";
 import LegalFooter from "@/components/LegalFooter";
@@ -30,6 +30,12 @@ const META: Record<string, { title: string; description: string }> = {
     description: "Частная подборка элитной недвижимости в Марбелье и Коста-дель-Соль. Real Estate Curators.",
   },
 };
+
+export function generateViewport(): Viewport {
+  return {
+    themeColor: "#2D5240",
+  };
+}
 
 export async function generateMetadata({ params }: { params: Promise<{ locale: string }> }): Promise<Metadata> {
   const { locale } = await params;
@@ -60,7 +66,6 @@ export async function generateMetadata({ params }: { params: Promise<{ locale: s
         "x-default": `${BASE_URL}/en`,
       },
     },
-    themeColor: "#2D5240",
   };
 }
 
