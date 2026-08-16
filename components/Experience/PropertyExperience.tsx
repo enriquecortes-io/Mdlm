@@ -185,6 +185,19 @@ export default function PropertyExperience({ property, locale }: Props) {
                   const dotIndex = fullText.indexOf(".");
                   const firstSentence = dotIndex > 0 ? fullText.slice(1, dotIndex).trim() : fullText.slice(1, 120).trim();
                   const rest = dotIndex > 0 ? fullText.slice(dotIndex + 1).trim() : fullText.slice(120).trim();
+                  const isHTML = fullText.trimStart().startsWith("<");
+                  if (isHTML) return (
+                    <div
+                      className="property-html-desc"
+                      dangerouslySetInnerHTML={{ __html: fullText }}
+                      style={{
+                        fontFamily:"'Cormorant Garamond',serif",
+                        fontSize:"clamp(1rem,1.5vw,1.2rem)",
+                        color:"#1A1714",
+                        lineHeight:1.8,
+                      }}
+                    />
+                  );
                   return (
                     <div>
                       {/* Lead paragraph con drop cap */}

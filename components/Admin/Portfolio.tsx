@@ -46,6 +46,7 @@ export default function Portfolio({ password, role, onEdit }: Props) {
   const [lang, setLang] = useState("en");
   const [titulo, setTitulo] = useState<Record<string,string>>({es:"",en:"",fr:"",ru:""});
   const [descripcion, setDescripcion] = useState<Record<string,string>>({es:"",en:"",fr:"",ru:""});
+  const [descTab, setDescTab] = useState<"texto"|"html">("texto");
   const [editFields, setEditFields] = useState<any>({});
   const [translating, setTranslating] = useState(false);
 
@@ -371,15 +372,34 @@ export default function Portfolio({ password, role, onEdit }: Props) {
 
             {/* Descripción */}
             <label style={L}>Descripción ({lang.toUpperCase()})</label>
-            <div style={{ display:"flex", gap:"8px", marginBottom:"16px" }}>
+            {/* Tabs texto / HTML */}
+            <div style={{ display:"flex", gap:"0", marginBottom:"8px", borderBottom:"1px solid #e5e7eb" }}>
+              {(["texto","html"] as const).map(tab => (
+                <button key={tab} onClick={()=>setDescTab(tab)} style={{
+                  padding:"6px 16px", fontSize:"11px", fontWeight:600, letterSpacing:"0.08em",
+                  textTransform:"uppercase", border:"none", cursor:"pointer",
+                  background:"none", borderBottom: descTab===tab ? "2px solid #111" : "2px solid transparent",
+                  color: descTab===tab ? "#111" : "#8A847C",
+                }}>
+                  {tab === "texto" ? "Texto" : "HTML"}
+                </button>
+              ))}
+            </div>
+            <div style={{ display:"flex", gap:"8px", marginBottom:"8px" }}>
               <textarea value={descripcion[lang]||""}
                 onChange={e=>setDescripcion(p=>({...p,[lang]:e.target.value}))}
-                rows={6} style={{ ...INP, marginBottom:0, flex:1, resize:"vertical" }}/>
+                rows={8} style={{ ...INP, marginBottom:0, flex:1, resize:"vertical", fontFamily: descTab==="html" ? "monospace" : "inherit", fontSize: descTab==="html" ? "12px" : "inherit" }}/>
               <button onClick={()=>handleTranslate("descripcion")} disabled={translating}
                 style={{ padding:"10px 16px", background:"#7c3aed", color:"white", border:"none", borderRadius:"6px", fontSize:"13px", cursor:"pointer", alignSelf:"flex-start", whiteSpace:"nowrap" }}>
                 {translating?"...":"Traducir →4"}
               </button>
             </div>
+            {/* Preview HTML */}
+            {descTab === "html" && descripcion[lang] && (
+              <div style={{ border:"1px solid #e5e7eb", borderRadius:"6px", padding:"12px 16px", marginBottom:"16px", background:"#fafafa", fontSize:"13px", lineHeight:1.7 }}
+                dangerouslySetInnerHTML={{ __html: descripcion[lang] }}
+              />
+            )}
 
             {/* Indicador de traducciones */}
             <div style={{ display:"flex", gap:"8px", marginBottom:"24px" }}>
