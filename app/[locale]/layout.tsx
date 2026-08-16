@@ -128,7 +128,7 @@ export default async function LocaleLayout({
         <link rel="preload" href="/fonts/montserrat-300.woff2" as="font" type="font/woff2" crossOrigin="anonymous"/>
         <link rel="stylesheet" href="/fonts/fonts.css"/>
       </head>
-      <body style={{ background: "#FAFAF7", margin: 0 }}>
+      <body style={{ background: "#2D5240", margin: 0 }}>
         {/* Microsoft Clarity */}
         <Script
           strategy="afterInteractive"
