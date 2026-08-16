@@ -187,16 +187,23 @@ export default function PropertyExperience({ property, locale }: Props) {
                   const rest = dotIndex > 0 ? fullText.slice(dotIndex + 1).trim() : fullText.slice(120).trim();
                   const isHTML = fullText.trimStart().startsWith("<");
                   if (isHTML) return (
-                    <div
-                      className="property-html-desc"
-                      dangerouslySetInnerHTML={{ __html: fullText }}
-                      style={{
-                        fontFamily:"'Cormorant Garamond',serif",
-                        fontSize:"clamp(1rem,1.5vw,1.2rem)",
-                        color:"#1A1714",
-                        lineHeight:1.8,
-                      }}
-                    />
+                    <>
+                      <style>{`
+                        .property-html-desc p { margin:0 0 1.2rem; font-family:'Cormorant Garamond',serif; font-size:clamp(1rem,1.5vw,1.2rem); color:#1A1714; line-height:1.8; }
+                        .property-html-desc strong, .property-html-desc b { font-weight:600; color:#1A1714; }
+                        .property-html-desc em, .property-html-desc i { font-style:italic; }
+                        .property-html-desc a { color:#c9a96e; text-decoration:underline; text-underline-offset:3px; }
+                        .property-html-desc ul, .property-html-desc ol { margin:0 0 1.2rem 1.5rem; line-height:1.8; }
+                        .property-html-desc li { margin-bottom:0.4rem; }
+                        .property-html-desc h2 { font-family:'Cormorant Garamond',serif; font-size:clamp(1.3rem,2vw,1.8rem); font-weight:600; color:#1A1714; margin:1.5rem 0 0.8rem; }
+                        .property-html-desc h3 { font-family:'Cormorant Garamond',serif; font-size:clamp(1.1rem,1.5vw,1.4rem); font-weight:600; color:#1A1714; margin:1.5rem 0 0.8rem; }
+                      `}</style>
+                      <div
+                        className="property-html-desc"
+                        dangerouslySetInnerHTML={{ __html: fullText }}
+                        style={{ fontFamily:"'Cormorant Garamond',serif", fontSize:"clamp(1rem,1.5vw,1.2rem)", color:"#1A1714", lineHeight:1.8 }}
+                      />
+                    </>
                   );
                   return (
                     <div>
