@@ -60,6 +60,7 @@ export async function generateMetadata({ params }: { params: Promise<{ locale: s
         "x-default": `${BASE_URL}/en`,
       },
     },
+    themeColor: "#2D5240",
   };
 }
 
