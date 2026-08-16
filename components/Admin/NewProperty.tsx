@@ -14,6 +14,7 @@ export default function NewProperty({ password }: Props) {
   const [translated, setTranslated] = useState<Record<string,Record<string,string>>>({});
 
   const [form, setForm] = useState({
+  const [descTab, setDescTab] = useState<"texto"|"html">("texto");
     slug:"", sourceLang:"es", tipo:"", zona:"",
     titulo:"", descripcion:"",
     precio:"", habitaciones:"", banos:"",
@@ -194,12 +195,30 @@ export default function NewProperty({ password }: Props) {
 
           {/* Descripción */}
         <label style={L}>Descripción</label>
+        {/* Tabs texto / HTML */}
+        <div style={{ display:"flex", gap:"0", marginBottom:"8px", borderBottom:"1px solid #e5e7eb" }}>
+          {(["texto","html"] as const).map(tab => (
+            <button key={tab} type="button" onClick={()=>setDescTab(tab)} style={{
+              padding:"6px 16px", fontSize:"11px", fontWeight:600, letterSpacing:"0.08em",
+              textTransform:"uppercase", border:"none", cursor:"pointer",
+              background:"none", borderBottom: descTab===tab ? "2px solid #111" : "2px solid transparent",
+              color: descTab===tab ? "#111" : "#8A847C",
+            }}>
+              {tab === "texto" ? "Texto" : "HTML"}
+            </button>
+          ))}
+        </div>
         <div style={{ display:"flex", gap:"8px", marginBottom:"8px" }}>
           <textarea value={form.descripcion} onChange={e=>setForm(p=>({...p,descripcion:e.target.value}))}
-            placeholder="Descripción..." rows={5}
-            style={{...F,marginBottom:0,flex:1,resize:"vertical"}}/>
-
+            placeholder="Descripción..." rows={8}
+            style={{...F,marginBottom:0,flex:1,resize:"vertical", fontFamily: descTab==="html" ? "monospace" : "inherit", fontSize: descTab==="html" ? "12px" : "inherit"}}/>
         </div>
+        {/* Preview HTML */}
+        {descTab === "html" && form.descripcion && (
+          <div style={{ border:"1px solid #e5e7eb", borderRadius:"6px", padding:"12px 16px", marginBottom:"16px", background:"#fafafa", fontSize:"13px", lineHeight:1.7 }}
+            dangerouslySetInnerHTML={{ __html: form.descripcion }}
+          />
+        )}
 
 
         {/* Campos numéricos */}
